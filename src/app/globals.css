@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 /* Import the fonts from globals.js if needed */
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -10,14 +9,15 @@
   --font-nunito: "Nunito", sans-serif;
   --font-khula: "Khula", sans-serif;
   --color-lightGreen2: #e7fae8;
-  --color-lightGreen1: #f5fff6;
+  --color-lightGreen1: #dff6e1;
   --color-black1: #555656;
   --color-black2: #212121;
   --color-deepBlack1: #000000;
   --color-teal2: #094c51;
   --color-teal1: #187a81;
   --color-teal3: #002f43;
-  --color-teal4: #12494D;
+  --color-teal4: #12494d;
+  --color-tealGray1: #e4f3e4;
   --color-orange1: #ff7043;
   --color-green1: #3bbf41;
   --color-yellow1: #ffd54f;
