@@ -7,7 +7,7 @@ const Profile = () => {
   const statNumStyle = "text-[40px] font-bold";
   const statNumHeadDivStyle = "flex flex-col gap-5 justify-center items-center";
   return (
-    <div className="p-10 flex min-h-screen gap-5 justify-between">
+    <div className="p-10 flex min-h-screen gap-5 ">
       {/* profile div */}
       <div className="h-full border bg-white rounded-lg p-6 min-w-[400px] flex flex-col gap-5 justify-between">
         {/* top div */}
