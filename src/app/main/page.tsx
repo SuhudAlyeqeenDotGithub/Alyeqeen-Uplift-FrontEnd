@@ -1,6 +1,9 @@
 "use client";
+import Carousel from "@/components/carousel";
+import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 
 const Home = () => {
   const [recommendedValues, setRecommendedValues] = useState([
@@ -12,22 +15,113 @@ const Home = () => {
     "Integrity",
     "Courage",
     "Perseverance",
-    "Patience"
+    "Patience",
   ]);
+
+  const heroAffirmations = [
+    "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
+    "I listen with my heart and strive to understand how others feel, even when their experience is different from mine.",
+    "I am thankful for what I have, and I find joy in the simple things around me each day.",
+    "I stay true to my values, even when no one is watching, and I do what is right, not what is easy.",
+    "I show care and concern for others, offering support without judgement.",
+    "I face my fears with strength and take brave steps, even when the path is uncertain.",
+    "I keep going, even when things get tough, because I believe in myself and in the journey ahead.",
+    "I treat others with honour and dignity, just as I wish to be treated.",
+    "I trust the process and allow things to unfold in their own time, with calm and understanding.",
+  ];
+
+  const affirmations = [
+    {
+      value: "Kindness",
+      affirmations: [
+        "I choose to be kind, even when it's hard, because kindness creates peace.",
+        "I speak and act with love, offering kindness freely to others and myself.",
+        "Every day, I look for ways to brighten someone’s day with a kind word or gesture.",
+      ],
+    },
+    {
+      value: "Compassion",
+      affirmations: [
+        "I show compassion by being gentle with others and understanding their pain.",
+        "I care deeply about people and offer support without judgement.",
+        "My heart is open to those who suffer, and I respond with warmth and care.",
+      ],
+    },
+    {
+      value: "Empathy",
+      affirmations: [
+        "I listen to understand, not to respond, and I honour other people’s feelings.",
+        "I put myself in others’ shoes, allowing their experiences to shape my understanding.",
+        "Empathy guides my actions and helps me connect with others deeply.",
+      ],
+    },
+    {
+      value: "Gratitude",
+      affirmations: [
+        "I am thankful for what I have, and I celebrate the small wins each day.",
+        "Gratitude fills my heart and helps me see beauty in every moment.",
+        "I focus on what is good in my life and express thanks freely and often.",
+      ],
+    },
+    {
+      value: "Respect",
+      affirmations: [
+        "I treat everyone I meet with dignity and honour, including myself.",
+        "I value differences and listen with an open heart and mind.",
+        "Respect starts with how I speak, act, and show up in the world.",
+      ],
+    },
+    {
+      value: "Integrity",
+      affirmations: [
+        "I do the right thing, even when it’s not the easy thing.",
+        "I stand by my values and live honestly and truthfully.",
+        "My actions reflect my inner truth, and I remain grounded in who I am.",
+      ],
+    },
+    {
+      value: "Courage",
+      affirmations: [
+        "I face challenges with strength and take brave steps forward.",
+        "Fear does not stop me; I move forward with courage and confidence.",
+        "Each act of courage brings me closer to the life I want to live.",
+      ],
+    },
+    {
+      value: "Perseverance",
+      affirmations: [
+        "I keep going, even when it gets tough, because I believe in my path.",
+        "Setbacks do not stop me—they shape me into someone stronger.",
+        "I am committed to my goals and I rise every time I fall.",
+      ],
+    },
+    {
+      value: "Patience",
+      affirmations: [
+        "I allow things to unfold in their own time, trusting the process.",
+        "I remain calm and present, even in moments of waiting or delay.",
+        "With patience, I give space for growth, healing, and change to happen.",
+      ],
+    },
+  ];
 
   const [userValues, setUserValues] = useState<string[]>([]);
   const [customValue, setCustomValue] = useState<string>("");
 
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, value]);
-    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
+    setRecommendedValues(
+      recommendedValues.filter((recVal) => recVal !== value)
+    );
   };
 
   const addCustomValue = (value: string) => {
     const validValue = properCase(value);
     setUserValues((prevValues) => [...prevValues, validValue]);
     setCustomValue("");
-    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== validValue));
+    setRecommendedValues(
+      recommendedValues.filter((recVal) => recVal !== validValue)
+    );
   };
 
   interface HandleKeyDownEvent extends React.KeyboardEvent<HTMLInputElement> {}
@@ -44,16 +138,19 @@ const Home = () => {
   };
 
   return (
-    <div className="p-10 w-full">
-      <div className="flex justify-between gap-x-10">
+    <div className="p-10 w-full flex flex-col gap-10">
+      <div className="flex justify-between items-center gap-x-10">
         <div className="w-[80%] flex flex-col gap-5 ">
-          <h1 className="text-[40px] font-bold text-gray-600">Hi Suhud, It&rsquo;s time to uplift</h1>
-          <p className="text-[40px] font-bold">
-            I choose kindness today. My words, actions, and thoughts reflect compassion and understanding. Every small
-            act of kindness makes a difference.
-          </p>
+          <h1 className="text-[40px] font-bold text-gray-600">
+            Hi Suhud, It&rsquo;s time to uplift
+          </h1>
+          <Carousel
+            styling="text-[40px] font-bold"
+            texts={heroAffirmations}
+            duration={3000}
+          />
         </div>
-        <div className="flex flex-col gap-5 justify-center items-center bg-tealGray1 rounded-md p-4 w-[600px] h-[400px]">
+        <div className="flex flex-col gap-8 justify-center items-center bg-tealGray1 border border-greenStroke1 rounded-md p-4 w-[500px] h-[400px]">
           <h1 className="font-bold h-[50px]">Your Values</h1>
           <div className="h-[150px] w-full flex flex-wrap gap-2 overflow-auto text-[14px]">
             {userValues.length > 0 ? (
@@ -67,7 +164,7 @@ const Home = () => {
             )}
           </div>
           <div className="h-[500px] w-full flex flex-col gap-5 items-center ">
-            <Button variant="teal" className="w-[30%]">
+            <Button variant="teal1" className="w-[30%]">
               Edit Values
             </Button>
             <div className="flex gap-5 items-center">
@@ -80,12 +177,16 @@ const Home = () => {
                 onKeyDown={handleKeyDown}
                 className="bg-white rounded-md p-2 mt-2"
               />
-              <Button variant="teal" className="w-[20%]" onClick={() => addCustomValue(customValue)}>
+              <Button
+                variant="teal1"
+                className="w-[20%]"
+                onClick={() => addCustomValue(customValue)}
+              >
                 Add
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 justify-center items-center mt-5">
               {recommendedValues.map((value) => (
                 <Button
                   key={value}
@@ -100,7 +201,28 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="flex flex-col gap-5">
+        <div className="flex justify-end mr-20 mb-10">
+          <div className="flex w-[500px] items-center bg-white p-2 rounded-md border border-greenStroke1">
+            <input
+              className="w-full outline-none border-none"
+              placeholder="Quickly Find Affirmations - By Value"
+            />
+            <FaSearch className="text-gray-400 size-5" />
+          </div>
+        </div>
+        <div className="overflow-auto h-[700px]">
+          <div className="flex flex-wrap justify-center gap-4">
+            {affirmations.map(({ value, affirmations }) => (
+              <ValueCard
+                key={value}
+                value={value}
+                affirmations={affirmations}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

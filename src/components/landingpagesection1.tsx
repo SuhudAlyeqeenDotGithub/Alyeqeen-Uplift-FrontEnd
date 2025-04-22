@@ -2,12 +2,13 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Carousel from "./carousel";
+import Link from "next/link";
 
 const LandingPageSection1 = () => {
   const texts = [
     "Start Your Day Right with Custom Affirmations",
     "Fuel Your Success with AI-Generated Inspiration",
-    "Achieve More with Reminders That Inspire"
+    "Achieve More with Reminders That Inspire",
   ];
 
   return (
@@ -22,17 +23,27 @@ const LandingPageSection1 = () => {
       </div>
 
       <div className="text-white md:text-[50px] text-[30px] font-thin text-center">
-        <Carousel texts={texts} duration={2000} styling="text-white md:text-[50px] text-[30px] font-thin text-center transition duration-500 ease-in-out" />
+        <Carousel
+          texts={texts}
+          duration={2000}
+          styling="text-white md:text-[50px] text-[30px] font-thin text-center transition duration-500 ease-in-out"
+        />
       </div>
       <div className="flex flex-col md:flex-row md:gap-5 gap-3">
-        <Button variant="green" className="md:p-6 md:text-[16px]">
-          Get Started for Free
-        </Button>
-        <Button variant="orange" className="md:p-6 md:text-[16px]">
-          Download Now
-        </Button>
+        <Link href="/main">
+          <Button variant="green" className="md:p-6 md:text-[16px]">
+            Get Started for Free
+          </Button>
+        </Link>
+        <Link href="/main">
+          <Button variant="orange" className="md:p-6 md:text-[16px]">
+            Download Now
+          </Button>
+        </Link>
       </div>
-      <div className="text-white font-semibold hover:cursor-pointer hover:underline">Explore Features & Benefits</div>
+      <div className="text-white font-semibold hover:cursor-pointer hover:underline">
+        Explore Features & Benefits
+      </div>
     </div>
   );
 };
