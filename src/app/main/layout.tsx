@@ -21,11 +21,10 @@ const Main: React.FC<MainProps> = ({ children }) => {
   return (
     <div className="bg-lightGreen2 flex flex-row">
       <div
-        className={`p-3 border-r-1 border-gray-300 h-full font-semibold ${
-          fullNav ? "min-w-[18%]" : ""
+        className={`p-3 border-r-1 border-gray-300 font-semibold ${
+          fullNav ? "" : ""
         }`}
       >
-        
         <IoMdMenu
           className="hover:cursor-pointer text-[30px] mb-10 hover:opacity-50"
           onClick={() => {
@@ -33,27 +32,27 @@ const Main: React.FC<MainProps> = ({ children }) => {
           }}
         />
         <nav className="flex flex-col gap-5 ">
-          <Link href="/main" className={linkStyle}>
-            <IoHomeOutline className={iconStyle} />{" "}
+          <Link href="/main" className={linkStyle} title="Home">
+            <IoHomeOutline className={iconStyle} />
             <div className={linkTextStyle}>Home</div>
           </Link>
-          <Link href="/main/profile" className={linkStyle}>
-            <CgProfile className={iconStyle} />{" "}
+          <Link href="/main/profile" className={linkStyle} title="Profile">
+            <CgProfile className={iconStyle} />
             <div className={linkTextStyle}>Profile</div>
           </Link>
-          <Link href="/main/values" className={linkStyle}>
+          <Link href="/main/values" className={linkStyle} title="Values">
             <IoStarOutline className={iconStyle} />
             <div className={linkTextStyle}>Values</div>
           </Link>
-          <Link href="/main/affirmations" className={linkStyle}>
-            <GiConfirmed className={iconStyle} />{" "}
+          <Link href="/main/affirmations" className={linkStyle} title="Affirmations">
+            <GiConfirmed className={iconStyle} />
             <div className={linkTextStyle}>Affirmations</div>
           </Link>
-          <Link href="/main/themes" className={linkStyle}>
-            <MdOutlineColorLens className={iconStyle} />{" "}
+          <Link href="/main/themes" className={linkStyle} title="Themes">
+            <MdOutlineColorLens className={iconStyle} />
             <div className={linkTextStyle}>Themes </div>
           </Link>
-          <Link href="/main/guide" className={linkStyle}>
+          <Link href="/main/guide" className={linkStyle} title="Guide">
             <MdHelpOutline className={iconStyle} />
             <div className={linkTextStyle}>Guide </div>
           </Link>
