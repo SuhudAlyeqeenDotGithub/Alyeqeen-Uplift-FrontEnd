@@ -44,7 +44,7 @@ const ValuesPage = () => {
   };
   return (
     <div className="bg-[url(/lake.jpg)] bg-cover bg-center min-h-screen w-full px-20 py-10">
-      <div className="bg-black/30 min-h-screen pt-10 px-6 flex flex-col gap-6">
+      <div className="bg-black/30 pt-10 px-6 flex flex-col gap-10 py-10">
         {/* heading div */}
         <div className="flex flex-col gap-2">
           <h1 className="text-white font-extrabold text-[40px]">
@@ -71,14 +71,16 @@ const ValuesPage = () => {
                 </Button>
               ))
             ) : (
-              <span className="">Please a custom or recommended value</span>
+              <span className="">
+                Please enter a custom or recommended value
+              </span>
             )}
           </div>
           {/* custom value div */}
           <div className="flex flex-col gap-3 justify-center">
             <h1 className="text-white font-bold">Custom Value</h1>{" "}
             <input
-              className="bg-lightGreen2 p-2 border-b-2 border-green1 outline-none"
+              className="bg-lightGreen2 p-2 border-b-2 border-green1 outline-none rounded-lg"
               type="text"
               placeholder="Custom value"
               value={customValue}
@@ -91,7 +93,7 @@ const ValuesPage = () => {
         </div>
         {/* value buttons div */}
 
-        <div className="flex flex-wrap gap-3 justify-center items-center mt-3 min-h-[200px] max-h-[200px] overflow-auto">
+        <div className="flex flex-wrap gap-3 justify-center items-center mt-3 min-h-[200px] max-h-[200px] overflow-auto px-2">
           {recommendedValues.map((value) => (
             <Button
               key={value}
@@ -104,7 +106,7 @@ const ValuesPage = () => {
           ))}
         </div>
 
-        <div>
+        <div className="flex justify-center items-center">
           <Button variant="orange">Save Values</Button>
         </div>
       </div>

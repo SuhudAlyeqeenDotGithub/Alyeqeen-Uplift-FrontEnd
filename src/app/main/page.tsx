@@ -147,7 +147,9 @@ const Home = () => {
                 </span>
               ))
             ) : (
-              <span className="">Please a custom or recommended value</span>
+              <span className="">
+                Please enter a custom or recommended value
+              </span>
             )}
           </div>
           <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
@@ -176,7 +178,7 @@ const Home = () => {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[100px] overflow-auto">
+            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[100px] overflow-auto px-2">
               {recommendedValues.map((value) => (
                 <Button
                   key={value}
