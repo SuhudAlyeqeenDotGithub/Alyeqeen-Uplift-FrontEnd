@@ -82,9 +82,11 @@ const AffirmationPage = () => {
       {/* top div */}
       <div className="flex flex-col gap-3 mb-20">
         <h1 className="text-[30px] font-bold">
-          Feel Freee to Share, Download Affirmations
+          Feel Free to Share, Download Affirmations
         </h1>
-        <h1 className="text-[20px] font-semibold">A tip for you - Change the theme before downloading</h1>
+        <h1 className="text-[20px] font-semibold">
+          A tip for you - Change the theme before downloading
+        </h1>
       </div>
       {/* search div */}
       <div className="flex justify-center mr-20 mb-10">

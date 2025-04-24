@@ -14,12 +14,12 @@ const AffirmationCard = ({ value, affirmation }: AffirmationCardProps) => {
       {/* top div */}
       <div className="flex gap-5 justify-between items-center">
         <h1 className="font-bold text-[18px]">{value}</h1>{" "}
-        <Button variant="teal">Tone</Button>
+        <Button variant="teal1">Tone</Button>
       </div>
       {/* affirmation div */}
       <div>{affirmation}</div>
       <div className="flex gap-5 justify-between items-center">
-        <Button variant="teal">Change Theme</Button>
+        <Button variant="teal1">Change Theme</Button>
         <div className="flex gap-3">
           <FiDownload className={iconStyle} />
           <MdContentCopy className={iconStyle} />
