@@ -4,19 +4,12 @@ import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import values from "@/utilities/valuesList";
+import { properCase } from "@/utilities/shortFuntions";
+import Link from "next/link";
 
 const Home = () => {
-  const [recommendedValues, setRecommendedValues] = useState([
-    "Kindness",
-    "Compassion",
-    "Empathy",
-    "Gratitude",
-    "Respect",
-    "Integrity",
-    "Courage",
-    "Perseverance",
-    "Patience",
-  ]);
+  const [recommendedValues, setRecommendedValues] = useState(values);
 
   const heroAffirmations = [
     "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
@@ -131,12 +124,6 @@ const Home = () => {
     }
   };
 
-  const properCase = (value: string): string => {
-    const firstLetter = value.charAt(0).toUpperCase();
-    const restOfString = value.slice(1).toLowerCase();
-    return firstLetter + restOfString.trim();
-  };
-
   return (
     <div className="p-10 w-full flex flex-col gap-10">
       <div className="flex justify-between items-center gap-x-10">
@@ -150,9 +137,9 @@ const Home = () => {
             duration={3000}
           />
         </div>
-        <div className="flex flex-col gap-8 justify-center items-center bg-tealGray1 border border-greenStroke1 rounded-md p-4 w-[500px] h-[400px]">
-          <h1 className="font-bold h-[50px]">Your Values</h1>
-          <div className="h-[150px] w-full flex flex-wrap gap-2 overflow-auto text-[14px]">
+        <div className="flex flex-col gap-5 justify-center items-center bg-tealGray1 border border-greenStroke1 rounded-md p-4 w-[500px] h-[400px]">
+          <h1 className="font-bold mb-2">Your Values</h1>
+          <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
             {userValues.length > 0 ? (
               userValues.map((value) => (
                 <span key={value} className="">
@@ -163,10 +150,13 @@ const Home = () => {
               <span className="">Please a custom or recommended value</span>
             )}
           </div>
-          <div className="h-[500px] w-full flex flex-col gap-5 items-center ">
-            <Button variant="teal1" className="w-[30%]">
-              Edit Values
-            </Button>
+          <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
+            <Link href="/main/values" title="Values">
+              <Button variant="teal1" className="">
+                Edit Values
+              </Button>
+            </Link>
+
             <div className="flex gap-5 items-center">
               <input
                 type="text"
@@ -186,7 +176,7 @@ const Home = () => {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center items-center mt-5">
+            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[100px] overflow-auto">
               {recommendedValues.map((value) => (
                 <Button
                   key={value}
