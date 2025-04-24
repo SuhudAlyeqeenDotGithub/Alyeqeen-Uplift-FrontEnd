@@ -10,7 +10,7 @@ interface AffirmationCardProps {
 const AffirmationCard = ({ value, affirmation }: AffirmationCardProps) => {
   const iconStyle = "size-5 hover:text-gray-500";
   return (
-    <div className="flex flex-col gap-8 text-teal2 bg-white rounded-xl p-6 w-[400px] h-[250px]">
+    <div className="flex flex-col gap-8 text-teal2 bg-white rounded-xl p-6 w-[400px] h-[250px] shadow-md border border-gray-200">
       {/* top div */}
       <div className="flex gap-5 justify-between items-center">
         <h1 className="font-bold text-[18px]">{value}</h1>{" "}
