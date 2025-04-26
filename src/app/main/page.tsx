@@ -1,4 +1,5 @@
 "use client";
+
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,7 @@ const Home = () => {
     "I face my fears with strength and take brave steps, even when the path is uncertain.",
     "I keep going, even when things get tough, because I believe in myself and in the journey ahead.",
     "I treat others with honour and dignity, just as I wish to be treated.",
-    "I trust the process and allow things to unfold in their own time, with calm and understanding.",
+    "I trust the process and allow things to unfold in their own time, with calm and understanding."
   ];
 
   const affirmations = [
@@ -29,73 +30,73 @@ const Home = () => {
       affirmations: [
         "I choose to be kind, even when it's hard, because kindness creates peace.",
         "I speak and act with love, offering kindness freely to others and myself.",
-        "Every day, I look for ways to brighten someone’s day with a kind word or gesture.",
-      ],
+        "Every day, I look for ways to brighten someone’s day with a kind word or gesture."
+      ]
     },
     {
       value: "Compassion",
       affirmations: [
         "I show compassion by being gentle with others and understanding their pain.",
         "I care deeply about people and offer support without judgement.",
-        "My heart is open to those who suffer, and I respond with warmth and care.",
-      ],
+        "My heart is open to those who suffer, and I respond with warmth and care."
+      ]
     },
     {
       value: "Empathy",
       affirmations: [
         "I listen to understand, not to respond, and I honour other people’s feelings.",
         "I put myself in others’ shoes, allowing their experiences to shape my understanding.",
-        "Empathy guides my actions and helps me connect with others deeply.",
-      ],
+        "Empathy guides my actions and helps me connect with others deeply."
+      ]
     },
     {
       value: "Gratitude",
       affirmations: [
         "I am thankful for what I have, and I celebrate the small wins each day.",
         "Gratitude fills my heart and helps me see beauty in every moment.",
-        "I focus on what is good in my life and express thanks freely and often.",
-      ],
+        "I focus on what is good in my life and express thanks freely and often."
+      ]
     },
     {
       value: "Respect",
       affirmations: [
         "I treat everyone I meet with dignity and honour, including myself.",
         "I value differences and listen with an open heart and mind.",
-        "Respect starts with how I speak, act, and show up in the world.",
-      ],
+        "Respect starts with how I speak, act, and show up in the world."
+      ]
     },
     {
       value: "Integrity",
       affirmations: [
         "I do the right thing, even when it’s not the easy thing.",
         "I stand by my values and live honestly and truthfully.",
-        "My actions reflect my inner truth, and I remain grounded in who I am.",
-      ],
+        "My actions reflect my inner truth, and I remain grounded in who I am."
+      ]
     },
     {
       value: "Courage",
       affirmations: [
         "I face challenges with strength and take brave steps forward.",
         "Fear does not stop me; I move forward with courage and confidence.",
-        "Each act of courage brings me closer to the life I want to live.",
-      ],
+        "Each act of courage brings me closer to the life I want to live."
+      ]
     },
     {
       value: "Perseverance",
       affirmations: [
         "I keep going, even when it gets tough, because I believe in my path.",
         "Setbacks do not stop me—they shape me into someone stronger.",
-        "I am committed to my goals and I rise every time I fall.",
-      ],
+        "I am committed to my goals and I rise every time I fall."
+      ]
     },
     {
       value: "Patience",
       affirmations: [
         "I allow things to unfold in their own time, trusting the process.",
         "I remain calm and present, even in moments of waiting or delay.",
-        "With patience, I give space for growth, healing, and change to happen.",
-      ],
-    },
+        "With patience, I give space for growth, healing, and change to happen."
+      ]
+    }
   ];
 
   const [userValues, setUserValues] = useState<string[]>([]);
@@ -103,18 +104,14 @@ const Home = () => {
 
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, value]);
-    setRecommendedValues(
-      recommendedValues.filter((recVal) => recVal !== value)
-    );
+    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
   };
 
   const addCustomValue = (value: string) => {
     const validValue = properCase(value);
     setUserValues((prevValues) => [...prevValues, validValue]);
     setCustomValue("");
-    setRecommendedValues(
-      recommendedValues.filter((recVal) => recVal !== validValue)
-    );
+    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== validValue));
   };
 
   interface HandleKeyDownEvent extends React.KeyboardEvent<HTMLInputElement> {}
@@ -128,16 +125,10 @@ const Home = () => {
     <div className="p-10 w-full flex flex-col gap-10">
       <div className="flex justify-between items-center gap-x-10">
         <div className="w-[80%] flex flex-col gap-5 ">
-          <h1 className="text-[40px] font-bold text-gray-600">
-            Hi Suhud, It&rsquo;s time to uplift
-          </h1>
-          <Carousel
-            styling="text-[40px] font-bold"
-            texts={heroAffirmations}
-            duration={3000}
-          />
+          <h1 className="text-[40px] font-bold text-themeText-80">Hi Suhud, It&rsquo;s time to uplift</h1>
+          <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
         </div>
-        <div className="flex flex-col gap-5 justify-center items-center bg-tealGray1 border border-greenStroke1 rounded-md p-4 w-[500px] h-[400px]">
+        <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[500px] h-[500px] bg-themeText-5 border border-themeText-10">
           <h1 className="font-bold mb-2">Your Values</h1>
           <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
             {userValues.length > 0 ? (
@@ -147,16 +138,12 @@ const Home = () => {
                 </span>
               ))
             ) : (
-              <span className="">
-                Please enter a custom or recommended value
-              </span>
+              <span className="">Please enter a custom or recommended value</span>
             )}
           </div>
           <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
             <Link href="/main/values" title="Values">
-              <Button variant="teal1" className="">
-                Edit Values
-              </Button>
+              <Button>Edit Values</Button>
             </Link>
 
             <div className="flex gap-5 items-center">
@@ -169,23 +156,14 @@ const Home = () => {
                 onKeyDown={handleKeyDown}
                 className="bg-white rounded-md p-2 mt-2"
               />
-              <Button
-                variant="teal1"
-                className="w-[20%]"
-                onClick={() => addCustomValue(customValue)}
-              >
+              <Button className="w-[20%]" onClick={() => addCustomValue(customValue)}>
                 Add
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[100px] overflow-auto px-2">
+            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[] overflow-auto px-2">
               {recommendedValues.map((value) => (
-                <Button
-                  key={value}
-                  variant="ghost"
-                  className="border-1 border-teal2 rounded-full p-2"
-                  onClick={() => addValue(value)}
-                >
+                <Button key={value} variant="ghost" className="rounded-full p-2" onClick={() => addValue(value)}>
                   {value}
                 </Button>
               ))}
@@ -196,21 +174,14 @@ const Home = () => {
       <div className="flex flex-col gap-5">
         <div className="flex justify-end mr-20 mb-10">
           <div className="flex w-[500px] items-center bg-white p-2 rounded-md border border-greenStroke1">
-            <input
-              className="w-full outline-none border-none"
-              placeholder="Quickly Find Affirmations - By Value"
-            />
+            <input className="w-full outline-none border-none" placeholder="Quickly Find Affirmations - By Value" />
             <FaSearch className="text-gray-400 size-5" />
           </div>
         </div>
         <div className="overflow-auto h-[700px]">
           <div className="flex flex-wrap justify-center gap-4">
             {affirmations.map(({ value, affirmations }) => (
-              <ValueCard
-                key={value}
-                value={value}
-                affirmations={affirmations}
-              />
+              <ValueCard key={value} value={value} affirmations={affirmations} />
             ))}
           </div>
         </div>

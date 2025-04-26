@@ -13,27 +13,19 @@ const ValuesPage = () => {
 
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, value]);
-    setRecommendedValues(
-      recommendedValues.filter((recVal) => recVal !== value)
-    );
+    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
   };
 
   const removeValue = (value: string) => {
-    setUserValues((prevValues) =>
-      [...prevValues].filter((recVal) => recVal !== value)
-    );
-    setRecommendedValues((prevValues) =>
-      [...prevValues, value].sort((a, b) => a.localeCompare(b))
-    );
+    setUserValues((prevValues) => [...prevValues].filter((recVal) => recVal !== value));
+    setRecommendedValues((prevValues) => [...prevValues, value].sort((a, b) => a.localeCompare(b)));
   };
 
   const addCustomValue = (value: string) => {
     const validValue = properCase(value);
     setUserValues((prevValues) => [...prevValues, validValue]);
     setCustomValue("");
-    setRecommendedValues(
-      recommendedValues.filter((recVal) => recVal !== validValue)
-    );
+    setRecommendedValues(recommendedValues.filter((recVal) => recVal !== validValue));
   };
 
   interface HandleKeyDownEvent extends React.KeyboardEvent<HTMLInputElement> {}
@@ -47,9 +39,7 @@ const ValuesPage = () => {
       <div className="bg-black/30 pt-10 px-6 flex flex-col gap-10 py-10">
         {/* heading div */}
         <div className="flex flex-col gap-2">
-          <h1 className="text-white font-extrabold text-[40px]">
-            Let's Start From Your Values and Principles
-          </h1>
+          <h1 className="text-white font-extrabold text-[40px]">Let's Start From Your Values and Principles</h1>
           <h1 className="text-yellow1 font-bold text-[20px]">
             Please select from the recommended values or enter a custom one
           </h1>
@@ -60,20 +50,13 @@ const ValuesPage = () => {
           <div className="flex flex-wrap place-content-start p-5 gap-3 bg-lightGreen2 w-full h-[300px] overflow-auto">
             {userValues.length > 0 ? (
               userValues.map((value) => (
-                <Button
-                  variant="teal"
-                  key={value}
-                  className="p-2 border rounded-full flex gap-2"
-                  onClick={() => removeValue(value)}
-                >
+                <Button key={value} className="p-2 border rounded-full flex gap-2" onClick={() => removeValue(value)}>
                   {value}
                   <IoIosClose />
                 </Button>
               ))
             ) : (
-              <span className="">
-                Please enter a custom or recommended value
-              </span>
+              <span className="">Please enter a custom or recommended value</span>
             )}
           </div>
           {/* custom value div */}
@@ -95,12 +78,7 @@ const ValuesPage = () => {
 
         <div className="flex flex-wrap gap-3 justify-center items-center mt-3 min-h-[200px] max-h-[200px] overflow-auto px-2">
           {recommendedValues.map((value) => (
-            <Button
-              key={value}
-              variant="secondary"
-              className="border-1 border-teal2 rounded-full p-2"
-              onClick={() => addValue(value)}
-            >
+            <Button key={value} className="" onClick={() => addValue(value)}>
               {value}
             </Button>
           ))}

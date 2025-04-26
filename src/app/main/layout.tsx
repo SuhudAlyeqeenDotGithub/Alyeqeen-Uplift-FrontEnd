@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { IoMdMenu } from "react-icons/io";
 import { IoHomeOutline, IoStarOutline } from "react-icons/io5";
@@ -19,12 +20,8 @@ const Main: React.FC<MainProps> = ({ children }) => {
   const linkTextStyle = `${fullNav ? "block" : "hidden"}`;
 
   return (
-    <div className="bg-lightGreen2 flex flex-row">
-      <div
-        className={`p-3 border-r-1 border-gray-300 font-semibold ${
-          fullNav ? "" : ""
-        }`}
-      >
+    <div className="flex flex-row bg-themeBackground text-themeText">
+      <div className={`p-3 border-r-1 border-gray-300 font-semibold ${fullNav ? "" : ""}`}>
         <IoMdMenu
           className="hover:cursor-pointer text-[30px] mb-10 hover:opacity-50"
           onClick={() => {
