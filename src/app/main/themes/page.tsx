@@ -7,6 +7,7 @@ const ThemePage = () => {
   const recommendedColors = ["#FFD54F", "#000000", "#FFFFFF", "#3BBF41", "#157EAB", "#187A81", "#FF7043", "#E7FAE8"];
   const [customColor, setCustomColor] = useState("");
   const [isValidColor, setIsValidColor] = useState(false);
+  const [componentToChange, setComponentToChange] = useState("Background");
   useEffect(() => {
     const hexRegex = /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
     setIsValidColor(hexRegex.test(customColor));
@@ -26,9 +27,30 @@ const ThemePage = () => {
       <div className="flex justify-between items-center gap-5 mx-40">
         {/* component selection div */}
         <div className="flex gap-5 font-semibold text-gray-500">
-          <button>Background</button>
-          <button>Text</button>
-          <button>Button</button>
+          <button
+            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+              componentToChange === "Background" ? "bg-gray-300 text-black" : ""
+            }`}
+            onClick={() => setComponentToChange("Background")}
+          >
+            Background
+          </button>
+          <button
+            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+              componentToChange === "Text" ? "bg-gray-300 text-black" : ""
+            }`}
+            onClick={() => setComponentToChange("Text")}
+          >
+            Text
+          </button>
+          <button
+            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+              componentToChange === "Button" ? "bg-gray-300 text-black" : ""
+            }`}
+            onClick={() => setComponentToChange("Button")}
+          >
+            Button
+          </button>
         </div>
         {/* custom color div */}
         <div className="flex ">
@@ -41,7 +63,7 @@ const ThemePage = () => {
                 placeholder="Custom Color Format: #736D6D"
                 onChange={(e) => setCustomColor(e.target.value)}
               />
-              <div className="text-[13px]">{!isValidColor && "Invalid Color"}</div>
+              <div className="text-[13px] text-gray-600">{!isValidColor && "Invalid Color"}</div>
             </div>
 
             <div
