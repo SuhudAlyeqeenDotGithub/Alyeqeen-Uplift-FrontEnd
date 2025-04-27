@@ -24,7 +24,7 @@ const switchTextComboStyle = "flex gap-3 justify-between";
 
 const ValueCard = ({ value, affirmations }: ValueCardProps) => {
   return (
-    <div className=" flex flex-col gap-10 w-[400px] h-[500px] bg-white rounded-xl border shadow-md border-greenStroke1 p-6 text-[15px] items-center justify-center">
+    <div className=" flex flex-col gap-10 w-[400px] h-[500px] bg-themeText-5 border border-themeText-10 rounded-xl shadow-md p-6 text-[15px] items-center justify-center">
       <div className="flex flex-col gap-5">
         <h1 className="text-[20px] font-extrabold">{value}</h1>
         <div>
@@ -45,7 +45,7 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
         </div>
         {/* custom affirmation div */}
         <div className="flex gap-5 justify-between">
-          <input className="outline-none border" />
+          <input className="outline-none border bg-white rounded-md" />
           <Button>Add</Button>
         </div>
       </div>

@@ -1,23 +1,21 @@
 "use client";
 
-import { useTheme } from "@/utilities/ThemeContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { FaSearch } from "react-icons/fa";
 
 const ThemePage = () => {
-  const { theme, setCustomTheme } = useTheme();
-  const { background, text, buttonText, button } = theme;
   const recommendedColors = ["#FFD54F", "#000000", "#FFFFFF", "#3BBF41", "#157EAB", "#187A81", "#FF7043", "#E7FAE8"];
   const [customColor, setCustomColor] = useState("");
   const [isValidColor, setIsValidColor] = useState(false);
   const [componentToChange, setComponentToChange] = useState("Background");
 
   const [themeObject, setThemeObject] = useState({
-    Background: background,
-    Text: text,
-    ButtonBack: button,
-    ButtonText: buttonText
+    Background: getComputedStyle(document.documentElement).getPropertyValue("--OthemeBackground"),
+    Text: getComputedStyle(document.documentElement).getPropertyValue("--OthemeText"),
+    ButtonBack: getComputedStyle(document.documentElement).getPropertyValue("--OthemeButton"),
+    ButtonText: getComputedStyle(document.documentElement).getPropertyValue("--OthemeButtonText")
   });
   const { Background, Text, ButtonBack, ButtonText } = themeObject;
 
@@ -84,7 +82,7 @@ const ThemePage = () => {
         </div>
 
         {/* selection details div */}
-        <div className="rounded-md p-5 justify-center items-center flex flex-col gap-5 my-5 bg-themeText-10 text-themeText-80">
+        {/* <div className="rounded-md p-5 justify-center items-center flex flex-col gap-5 my-5 bg-themeText-10 text-themeText-80">
           <div className="flex justify-between items-center gap-5">
             <div className="flex flex-col gap-2 justify-center items-center font-semibold">
               <h1 className="whitespace-nowrap">Current Background Theme</h1>
@@ -102,6 +100,29 @@ const ThemePage = () => {
               <h1 className="whitespace-nowrap">Current Button Text Theme</h1>
               <div className="w-8 h-8 rounded-md border shadow-lg" style={{ backgroundColor: ButtonText }}></div>
             </div>
+          </div>
+        </div> */}
+
+        {/* prototype div */}
+        <div
+          className="w-100 flex flex-col gap-4 justify-center rounded-md p-5 border border-themeText-40"
+          style={{ backgroundColor: Background }}
+        >
+          <div className="flex flex-col">
+            <h1 className="text-[20px] font-bold text-themeText" style={{ color: Text }}>
+              Prototype - Title
+            </h1>
+            <h2 className="font-semibold text-themeText-50" style={{ color: Text, opacity: 0.9 }}>
+              Feel it Subtitle
+            </h2>
+          </div>
+
+          <p className="my-1 text-themeText" style={{ color: Text }}>
+            Have a feel of the theme you selected. This is how it will look like in the main app.
+          </p>
+          <div className="flex justify-between items-center gap-5 w-full">
+            <Button style={{ background: ButtonBack, color: ButtonText }}>Button</Button>
+            <FaSearch className="text-[30px]" style={{ color: Text }} />
           </div>
         </div>
       </div>

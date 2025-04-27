@@ -161,7 +161,7 @@ const Home = () => {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 h-[] overflow-auto px-2">
+            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 overflow-auto px-2">
               {recommendedValues.map((value) => (
                 <Button key={value} variant="ghost" className="rounded-full p-2" onClick={() => addValue(value)}>
                   {value}
