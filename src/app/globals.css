@@ -10,6 +10,56 @@
   --color-themeButton: var(--OthemeButton);
   --color-themeButtonText: var(--OthemeButtonText);
 
+  --color-opc-5-btn: color-mix(in srgb, var(--color-themeButton) 5%, transparent);
+  --color-opc-10-btn: color-mix(in srgb, var(--color-themeButton) 10%, transparent);
+  --color-opc-20-btn: color-mix(in srgb, var(--color-themeButton) 20%, transparent);
+  --color-opc-30-btn: color-mix(in srgb, var(--color-themeButton) 30%, transparent);
+  --color-opc-40-btn: color-mix(in srgb, var(--color-themeButton) 40%, transparent);
+  --color-opc-50-btn: color-mix(in srgb, var(--color-themeButton) 50%, transparent);
+  --color-opc-60-btn: color-mix(in srgb, var(--color-themeButton) 60%, transparent);
+  --color-opc-70-btn: color-mix(in srgb, var(--color-themeButton) 70%, transparent);
+  --color-opc-80-btn: color-mix(in srgb, var(--color-themeButton) 80%, transparent);
+  --color-opc-90-btn: color-mix(in srgb, var(--color-themeButton) 90%, transparent);
+  --color-opc-100-btn: color-mix(in srgb, var(--color-themeButton) 100%, transparent);
+
+  /* Reference the opacity in themeButton */
+  --color-themeButton-5: var(--color-opc-5-btn);
+  --color-themeButton-10: var(--color-opc-10-btn);
+  --color-themeButton-20: var(--color-opc-20-btn);
+  --color-themeButton-30: var(--color-opc-30-btn);
+  --color-themeButton-40: var(--color-opc-40-btn);
+  --color-themeButton-50: var(--color-opc-50-btn);
+  --color-themeButton-60: var(--color-opc-60-btn);
+  --color-themeButton-70: var(--color-opc-70-btn);
+  --color-themeButton-80: var(--color-opc-80-btn);
+  --color-themeButton-90: var(--color-opc-90-btn);
+  --color-themeButton-100: var(--color-opc-100-btn);
+
+  --color-opc-5-bg: color-mix(in srgb, var(--color-themeBackground) 5%, transparent);
+  --color-opc-10-bg: color-mix(in srgb, var(--color-themeBackground) 10%, transparent);
+  --color-opc-20-bg: color-mix(in srgb, var(--color-themeBackground) 20%, transparent);
+  --color-opc-30-bg: color-mix(in srgb, var(--color-themeBackground) 30%, transparent);
+  --color-opc-40-bg: color-mix(in srgb, var(--color-themeBackground) 40%, transparent);
+  --color-opc-50-bg: color-mix(in srgb, var(--color-themeBackground) 50%, transparent);
+  --color-opc-60-bg: color-mix(in srgb, var(--color-themeBackground) 60%, transparent);
+  --color-opc-70-bg: color-mix(in srgb, var(--color-themeBackground) 70%, transparent);
+  --color-opc-80-bg: color-mix(in srgb, var(--color-themeBackground) 80%, transparent);
+  --color-opc-90-bg: color-mix(in srgb, var(--color-themeBackground) 90%, transparent);
+  --color-opc-100-bg: color-mix(in srgb, var(--color-themeBackground) 100%, transparent);
+
+  /* Reference the opacity in themeBackground */
+  --color-themeBackground-5: var(--color-opc-5-bg);
+  --color-themeBackground-10: var(--color-opc-10-bg);
+  --color-themeBackground-20: var(--color-opc-20-bg);
+  --color-themeBackground-30: var(--color-opc-30-bg);
+  --color-themeBackground-40: var(--color-opc-40-bg);
+  --color-themeBackground-50: var(--color-opc-50-bg);
+  --color-themeBackground-60: var(--color-opc-60-bg);
+  --color-themeBackground-70: var(--color-opc-70-bg);
+  --color-themeBackground-80: var(--color-opc-80-bg);
+  --color-themeBackground-90: var(--color-opc-90-bg);
+  --color-themeBackground-100: var(--color-opc-100-bg);
+
   /* Define opacities for transparency (mixing with transparent) */
   --color-opc-5: color-mix(in srgb, var(--color-themeText) 5%, transparent);
   --color-opc-10: color-mix(in srgb, var(--color-themeText) 10%, transparent);
