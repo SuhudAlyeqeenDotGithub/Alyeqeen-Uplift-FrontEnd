@@ -5,9 +5,11 @@ const LoginPage = () => {
   const inputStyle = "p-2 rounded-md w-1/2 border-2 border-teal4 outline-none focus:shadow shadow-teal4";
   return (
     <div className="bg-lightGreen1 min-h-screen flex justify-center items-center">
-      <div className="p-10 w-1/2 flex flex-col gap-5 justify-center items-center">
+      <div className="p-15 w-1/2 flex flex-col gap-5 justify-center items-center bg-black/2 border border-black/10 rounded-md shadow-sm">
         <div className="flex flex-col gap-3">
-          <h1 className="text-center text-[40px] font-extrabold text-teal4">Al-Yeqeen Uplift</h1>
+          <Link href="/" className="text-center text-[40px] font-extrabold text-teal4 hover:cursor-pointer">
+            Al-Yeqeen Uplift
+          </Link>
           <h1 className="text-center text-[25px] font-bold text-teal4">Log in</h1>
         </div>
 

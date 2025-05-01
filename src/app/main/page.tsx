@@ -129,13 +129,13 @@ const Home = () => {
       {/* nav div */}
       <div className="bg-themeText-5 border-b border-themeText-10 items-center flex justify-between p-2 px-10">
         <div className="flex justify-center items-center ml-20">
-          <div className="flex w-[500px] items-center bg-white p-2 rounded-md border border-greenStroke1">
+          <div className="flex w-[500px] items-center bg-themeText-5 p-2 rounded-md border border-themeText-20">
             <input className="w-full outline-none border-none" placeholder="Quickly Find Affirmations - By Value" />
-            <FaSearch className="text-gray-400 size-5" />
+            <FaSearch className="text-themeText size-5" />
           </div>
         </div>
         <div className="flex gap-8 items-center justify-center">
-          <Link href="/main/values" className="hover:text-themeText-70 rounded-full p-1 font-semibold" title="Values">
+          <Link href="/login" className="hover:text-themeText-70 rounded-full p-1 font-semibold" title="Values">
             Log out
           </Link>
 
