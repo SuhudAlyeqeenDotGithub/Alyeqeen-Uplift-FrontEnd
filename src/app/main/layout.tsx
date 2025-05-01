@@ -21,7 +21,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
 
   return (
     <div className="flex flex-row bg-themeBackground text-themeText">
-      <div className={`p-3 border-r-1 border-gray-300 font-semibold ${fullNav ? "" : ""}`}>
+      <div className={`p-3 border-r-1 border-themeText-10 font-semibold ${fullNav ? "" : ""}`}>
         <IoMdMenu
           className="hover:cursor-pointer text-[30px] mb-10 hover:opacity-50"
           onClick={() => {

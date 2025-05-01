@@ -1,5 +1,8 @@
 "use client";
 
+import { MdOutlineModeEdit } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
+
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
@@ -122,67 +125,88 @@ const Home = () => {
   };
 
   return (
-    <div className="p-10 w-full flex flex-col gap-10">
-      <div className="flex justify-between items-center gap-x-10">
-        <div className="w-[80%] flex flex-col gap-5 ">
-          <h1 className="text-[40px] font-bold text-themeText-80">Hi Suhud, It&rsquo;s time to uplift</h1>
-          <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
-        </div>
-        <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[500px] h-[500px] bg-themeText-5 border border-themeText-10">
-          <h1 className="font-bold mb-2">Your Values</h1>
-          <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
-            {userValues.length > 0 ? (
-              userValues.map((value) => (
-                <span key={value} className="">
-                  {value}
-                </span>
-              ))
-            ) : (
-              <span className="">Please enter a custom or recommended value</span>
-            )}
-          </div>
-          <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
-            <Link href="/main/values" title="Values">
-              <Button>Edit Values</Button>
-            </Link>
-
-            <div className="flex gap-5 items-center">
-              <input
-                type="text"
-                placeholder="Custom value"
-                value={customValue}
-                name={customValue}
-                onChange={(e) => setCustomValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="bg-white rounded-md p-2 mt-2"
-              />
-              <Button className="w-[20%]" onClick={() => addCustomValue(customValue)}>
-                Add
-              </Button>
-            </div>
-
-            <div className="flex flex-wrap gap-3 justify-center items-center mt-3 overflow-auto px-2">
-              {recommendedValues.map((value) => (
-                <Button key={value} variant="ghost" className="rounded-full p-2" onClick={() => addValue(value)}>
-                  {value}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex justify-end mr-20 mb-10">
+    <div className="">
+      {/* nav div */}
+      <div className="bg-themeText-5 border-b border-themeText-10 items-center flex justify-between p-2 px-10">
+        <div className="flex justify-center items-center ml-20">
           <div className="flex w-[500px] items-center bg-white p-2 rounded-md border border-greenStroke1">
             <input className="w-full outline-none border-none" placeholder="Quickly Find Affirmations - By Value" />
             <FaSearch className="text-gray-400 size-5" />
           </div>
         </div>
-        <div className="overflow-auto h-[700px]">
-          <div className="flex flex-wrap justify-center gap-4">
-            {affirmations.map(({ value, affirmations }) => (
-              <ValueCard key={value} value={value} affirmations={affirmations} />
-            ))}
+        <div className="flex gap-8 items-center justify-center">
+          <Link href="/main/values" className="hover:text-themeText-70 rounded-full p-1 font-semibold" title="Values">
+            Log out
+          </Link>
+
+          <div className="bg-[url(/water.jpg)] bg-cover bg-center rounded-full w-12 h-12 p-2">
+            <div className="bg-black/40 rounded-full w-full h-full flex justify-center items-center text-[15px] font-extrabold text-white">
+              SU
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* main body div */}
+      <div className="px-10 pt-5 pb-10 w-full flex flex-col gap-8">
+        <div className="flex justify-between items-center gap-x-10">
+          <div className="w-[80%] flex flex-col gap-5 ">
+            <h1 className="text-[40px] font-bold text-themeText-80">Hi Suhud, It&rsquo;s time to uplift</h1>
+            <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
+          </div>
+          <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[600px] h-[400px] bg-themeText-5 border border-themeText-10">
+            <div className="flex justify-center items-center w-full">
+              <h1 className="font-bold mb-2 w-full text-[18px]">Your Values</h1>
+              <div className="flex justify-end w-full">
+                <Link href="/main/values" className="hover:bg-themeText-10 rounded-full p-1" title="Values">
+                  <MdOutlineModeEdit className="size-6" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
+              {userValues.length > 0 ? (
+                userValues.map((value) => (
+                  <span key={value} className="">
+                    {value}
+                  </span>
+                ))
+              ) : (
+                <span className="">Please enter a custom or recommended value</span>
+              )}
+            </div>
+            <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
+              <div className="flex gap-5 items-center">
+                <input
+                  type="text"
+                  placeholder="Custom value"
+                  value={customValue}
+                  name={customValue}
+                  onChange={(e) => setCustomValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="bg-white rounded-md p-2 mt-2"
+                />
+                <Button className="w-[20%]" onClick={() => addCustomValue(customValue)}>
+                  Add
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap gap-3 justify-center items-center mt-3 overflow-auto px-2">
+                {recommendedValues.map((value) => (
+                  <Button key={value} variant="ghost" className="rounded-full p-2" onClick={() => addValue(value)}>
+                    {value}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-5">
+          <div className="overflow-auto h-[700px]">
+            <div className="flex flex-wrap justify-center gap-4">
+              {affirmations.map(({ value, affirmations }) => (
+                <ValueCard key={value} value={value} affirmations={affirmations} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

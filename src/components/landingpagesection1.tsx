@@ -8,12 +8,12 @@ const LandingPageSection1 = () => {
   const texts = [
     "Start Your Day Right with Custom Affirmations",
     "Fuel Your Success with AI-Generated Inspiration",
-    "Achieve More with Reminders That Inspire",
+    "Achieve More with Reminders That Inspire"
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center gap-y-15 mt-10 xl:mt-20">
-      <div className="flex flex-col justify-center items-center gap-y-3 w-full">
+    <div className="flex flex-col justify-center items-center gap-y-20">
+      <div className="flex flex-col justify-center items-center gap-y-3">
         <h1 className="text-white md:text-[50px] text-[35px] font-extrabold text-center">
           Welcome to Al-Yeqeen Uplift
         </h1>
@@ -22,7 +22,7 @@ const LandingPageSection1 = () => {
         </h2>
       </div>
 
-      <div className="text-white md:text-[50px] text-[30px] font-thin text-center">
+      <div className="text-white md:text-[60px] text-[40px] font-thin text-center">
         <Carousel
           texts={texts}
           duration={2000}
@@ -41,9 +41,7 @@ const LandingPageSection1 = () => {
           </Button>
         </Link>
       </div>
-      <div className="text-white font-semibold hover:cursor-pointer hover:underline">
-        Explore Features & Benefits
-      </div>
+      <div className="text-white font-semibold hover:cursor-pointer hover:underline">Explore Features & Benefits</div>
     </div>
   );
 };
