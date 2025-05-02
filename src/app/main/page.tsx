@@ -2,17 +2,26 @@
 
 import { MdOutlineModeEdit } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import values from "@/utilities/valuesList";
 import { properCase } from "@/utilities/shortFuntions";
 import Link from "next/link";
 
 const Home = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/login");
+    }
+  }, []);
+
   const [recommendedValues, setRecommendedValues] = useState(values);
 
   const heroAffirmations = [

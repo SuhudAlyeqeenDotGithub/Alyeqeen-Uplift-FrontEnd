@@ -30,7 +30,7 @@ const LandingPageSection1 = () => {
         />
       </div>
       <div className="flex flex-col md:flex-row md:gap-5 gap-3">
-        <Link href="/main">
+        <Link href="/signup">
           <Button variant="green" className="md:p-6 md:text-[16px]">
             Get Started for Free
           </Button>
