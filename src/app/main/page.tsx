@@ -1,13 +1,12 @@
 "use client";
 
 import { MdOutlineModeEdit } from "react-icons/md";
-import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import values from "@/utilities/valuesList";
 import { properCase } from "@/utilities/shortFuntions";
@@ -15,12 +14,16 @@ import Link from "next/link";
 
 const Home = () => {
   const router = useRouter();
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      router.push("/login");
-    }
-  }, []);
+  const { accessToken, userName } = JSON.parse(localStorage.getItem("user") || "{}") || {};
+  if (!accessToken) {
+    router.push("/login");
+  }
+  const name1 = userName?.split(" ")[0];
+  const initial = name1?.split("")[0] + name1?.split("")[1].toUpperCase();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/login");
+  };
 
   const [recommendedValues, setRecommendedValues] = useState(values);
 
@@ -144,13 +147,17 @@ const Home = () => {
           </div>
         </div>
         <div className="flex gap-8 items-center justify-center">
-          <Link href="/login" className="hover:text-themeText-70 rounded-full p-1 font-semibold" title="Values">
+          <button
+            className="hover:text-themeText-70 rounded-full p-1 font-semibold hover:cursor-pointer"
+            title="Values"
+            onClick={handleLogout}
+          >
             Log out
-          </Link>
+          </button>
 
           <div className="bg-[url(/water.jpg)] bg-cover bg-center rounded-full w-12 h-12 p-2">
             <div className="bg-black/40 rounded-full w-full h-full flex justify-center items-center text-[15px] font-extrabold text-white">
-              SU
+              {initial}
             </div>
           </div>
         </div>
@@ -159,7 +166,7 @@ const Home = () => {
       <div className="px-10 pt-5 pb-10 w-full flex flex-col gap-8">
         <div className="flex justify-between items-center gap-x-10">
           <div className="w-[80%] flex flex-col gap-5 ">
-            <h1 className="text-[40px] font-bold text-themeText-80">Hi Suhud, It&rsquo;s time to uplift</h1>
+            <h1 className="text-[40px] font-bold text-themeText-80">Hi {name1}, It&rsquo;s time to uplift</h1>
             <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
           </div>
           <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[600px] h-[400px] bg-themeText-5 border border-themeText-10">

@@ -1,9 +1,22 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 
+import { useRouter } from "next/navigation";
+
 const Profile = () => {
-  const statDivStyle =
-    "h-[250px] border bg-white rounded-lg p-8 gap-8 flex flex-col";
+  const router = useRouter();
+  const { accessToken, userName, authenticationType, userEmail } =
+    JSON.parse(localStorage.getItem("user") || "{}") || {};
+
+  if (!accessToken) {
+    router.push("/login");
+  }
+
+  const name1 = userName.split(" ")[0];
+  const initial = name1.split("")[0] + name1.split("")[1].toUpperCase();
+
+  const statDivStyle = "h-[250px] border bg-white rounded-lg p-8 gap-8 flex flex-col";
   const statNumStyle = "text-[40px] font-bold";
   const statNumHeadDivStyle = "flex flex-col gap-5 justify-center items-center";
   return (
@@ -15,13 +28,13 @@ const Profile = () => {
           {/* avatar */}
           <div className="bg-[url(/water.jpg)] bg-cover bg-center rounded-full w-40 h-40 p-2">
             <div className="bg-black/40 rounded-full w-full h-full flex justify-center items-center text-[55px] font-extrabold text-white">
-              SU
+              {initial}
             </div>
           </div>
           {/* names and email */}
           <div className="flex flex-col justify-center items-center">
-            <h1 className="font-bold text-[30px]">Suhud Ayodeji Yekini</h1>
-            <h1 className="text-[20px]">alyekeeniy@gmail.com</h1>
+            <h1 className="font-bold text-[30px]">{userName}</h1>
+            <h1 className="text-[20px]">{userEmail}</h1>
           </div>
           {/*  edit button */}
           <div>
@@ -34,11 +47,7 @@ const Profile = () => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2">
               <span className="font-semibold">Log in Method</span>
-              <span className="italic">OAuth / Third Party: Google</span>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="font-semibold">Traditional Authentication:</span>
-              <span className="italic">True</span>
+              <span className="italic">{authenticationType}</span>
             </div>
           </div>
           {/* auth div */}
@@ -48,14 +57,8 @@ const Profile = () => {
 
             <h1 className="font-bold text-[18px]">Change Password</h1>
             <div className="flex flex-col gap-3">
-              <input
-                className="bg-white p-2 rounded"
-                placeholder="New Password"
-              />
-              <input
-                className="bg-white p-2 rounded"
-                placeholder="Confirm New Password"
-              />
+              <input className="bg-white p-2 rounded" placeholder="New Password" />
+              <input className="bg-white p-2 rounded" placeholder="Confirm New Password" />
               <div>
                 <Button>Save</Button>
               </div>
@@ -74,15 +77,11 @@ const Profile = () => {
               <span className={statNumStyle}>80</span>
             </div>
             <div className={statNumHeadDivStyle}>
-              <h1 className="font-semibold text-gray-700">
-                No of AI Affirmations
-              </h1>
+              <h1 className="font-semibold text-gray-700">No of AI Affirmations</h1>
               <span className={statNumStyle}>30</span>
             </div>
             <div className={statNumHeadDivStyle}>
-              <h1 className="font-semibold text-gray-700">
-                No of Custom Affirmations
-              </h1>
+              <h1 className="font-semibold text-gray-700">No of Custom Affirmations</h1>
               <span className={statNumStyle}>60</span>
             </div>
           </div>
@@ -96,15 +95,11 @@ const Profile = () => {
               <span className={statNumStyle}>40</span>
             </div>
             <div className={statNumHeadDivStyle}>
-              <h1 className="font-semibold text-gray-700">
-                Set Notification - Affirmations
-              </h1>
+              <h1 className="font-semibold text-gray-700">Set Notification - Affirmations</h1>
               <span className={statNumStyle}>21</span>
             </div>
             <div className={statNumHeadDivStyle}>
-              <h1 className="font-semibold text-gray-700">
-                Unset Notification - Affirmations
-              </h1>
+              <h1 className="font-semibold text-gray-700">Unset Notification - Affirmations</h1>
               <span className={statNumStyle}>19</span>
             </div>
           </div>

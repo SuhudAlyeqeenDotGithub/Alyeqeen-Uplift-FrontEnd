@@ -27,8 +27,8 @@ const SignupPage = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/users/signup", formData);
       if (response.status === 201) {
-        const accessToken = response.data.accessToken;
-        localStorage.setItem("accessToken", accessToken);
+        const user = response.data;
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/main");
       }
     } catch (error) {

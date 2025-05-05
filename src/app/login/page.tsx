@@ -4,9 +4,16 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
+  const user = localStorage.getItem("user");
+  const parsedUser = user ? JSON.parse(user) : null;
+
+  if (parsedUser?.accessToken) {
+    router.push("/main");
+  }
   const inputStyle = "p-2 rounded-md w-1/2 border-2 border-teal4 outline-none focus:shadow shadow-teal4";
   const [formData, setFormData] = useState({
     userEmail: "",
@@ -25,8 +32,8 @@ const LoginPage = () => {
     try {
       const response = await axios.post("http://localhost:5000/api/users/login", formData);
       if (response.status === 201) {
-        const accessToken = response.data.accessToken;
-        localStorage.setItem("accessToken", accessToken);
+        const user = response.data;
+        localStorage.setItem("user", JSON.stringify(user));
         router.push("/main");
       }
     } catch (error) {
