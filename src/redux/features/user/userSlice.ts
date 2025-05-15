@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
+import { signUp, login } from "./userThunk";
 
 interface UserState {
   user: {
@@ -20,12 +21,12 @@ const initialState: UserState = {
     userId: "",
     userName: "",
     userEmail: "",
-    authenticationType: ""
+    authenticationType: "",
   },
   isSuccess: false,
   isLoading: false,
   isError: false,
-  errorMessage: ""
+  errorMessage: "",
 };
 
 export const userSlice = createSlice({
@@ -33,9 +34,45 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     resetUser: (state) => {
-      state.user = initialState.user;
-    }
-  }
+      Object.assign(state, initialState);
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUp.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = "";
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.errorMessage = action.payload as string;
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = "";
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.errorMessage = action.payload as string;
+      });
+  },
 });
 
 export const { resetUser } = userSlice.actions;
