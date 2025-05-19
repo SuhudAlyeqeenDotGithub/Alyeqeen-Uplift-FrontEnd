@@ -18,11 +18,10 @@ const Home = () => {
   const router = useRouter();
   const user = useSelector((state: RootState) => state.user);
   const { userName, userEmail } = user.user;
-console.log(user);
+  console.log(user);
 
   const name1 = userName?.split(" ")[0];
   const initial = name1?.split("")[0] + name1?.split("")[1].toUpperCase();
-
 
   const handleLogout = () => {
     localStorage.removeItem("user");
