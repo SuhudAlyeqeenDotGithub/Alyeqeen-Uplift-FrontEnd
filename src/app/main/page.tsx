@@ -6,29 +6,38 @@ import { useRouter } from "next/navigation";
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import values from "@/utilities/valuesList";
 import { properCase } from "@/utilities/shortFuntions";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store"; // Adjust the path if your store file is elsewhere
+import axios from "axios";
+import { useAppDispatch } from "@/redux/hooks";
+import { getUserProfile } from "@/redux/features/user/userThunk";
 
 const Home = () => {
   const router = useRouter();
-  const user = useSelector((state: RootState) => state.user);
-  const { userName, userEmail } = user.user;
-  console.log(user);
+  const dispatch = useAppDispatch();
+  const [recommendedValues, setRecommendedValues] = useState(values);
+  const [userValues, setUserValues] = useState<string[]>([]);
+  const [customValue, setCustomValue] = useState<string>("");
+  const userState = useSelector((state: RootState) => state.user);
+  const { userName, userEmail } = userState.user;
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!userName || !userEmail) {
+        await dispatch(getUserProfile());
+      }
+    };
+    fetchUserProfile();
+  }, [userName, userEmail, dispatch]);
 
   const name1 = userName?.split(" ")[0];
-  const initial = name1?.split("")[0] + name1?.split("")[1].toUpperCase();
+  const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    router.push("/login");
-  };
-
-  const [recommendedValues, setRecommendedValues] = useState(values);
+  if (!userState) return null;
 
   const heroAffirmations = [
     "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
@@ -117,9 +126,6 @@ const Home = () => {
     }
   ];
 
-  const [userValues, setUserValues] = useState<string[]>([]);
-  const [customValue, setCustomValue] = useState<string>("");
-
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, value]);
     setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
@@ -139,6 +145,17 @@ const Home = () => {
     }
   };
 
+  const handleLogout = async () => {
+    const response = await axios.get("http://localhost:5000/api/users/logout", {
+      withCredentials: true
+    });
+    if (response?.data?.message === "Logged out successfully") {
+      router.push("/");
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className="">
       {/* nav div */}
@@ -151,7 +168,7 @@ const Home = () => {
         </div>
         <div className="flex gap-8 items-center justify-center">
           <button
-            className="hover:text-themeText-70 rounded-full p-1 font-semibold hover:cursor-pointer"
+            className="hover:bg-themeText-20 rounded-md text-themeText p-2 font-semibold hover:cursor-pointer"
             title="Values"
             onClick={handleLogout}
           >
@@ -160,6 +177,7 @@ const Home = () => {
 
           <div className="bg-[url(/water.jpg)] bg-cover bg-center rounded-full w-12 h-12 p-2">
             <div className="bg-black/40 rounded-full w-full h-full flex justify-center items-center text-[15px] font-extrabold text-white">
+              {" "}
               {initial}
             </div>
           </div>

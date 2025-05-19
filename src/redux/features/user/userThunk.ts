@@ -1,6 +1,7 @@
 import { loginUser, signUpUser } from "./userServices";
 import type { loginData, signUpData } from "./userServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 interface User {
   userId: string;
@@ -29,4 +30,16 @@ const login = createAsyncThunk<User, loginData>("user/login", async (userData, {
   }
 });
 
-export { signUp, login };
+const getUserProfile = createAsyncThunk("user/getUserProfile", async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get("http://localhost:5000/user/getUserProfile", {
+      withCredentials: true
+    });
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  } catch (error) {}
+});
+
+export { signUp, login, getUserProfile };

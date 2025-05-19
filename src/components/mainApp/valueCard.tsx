@@ -29,8 +29,8 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
   const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
 
   const notitificationDialog = (
-    <div className=" flex bg-themeText-10  rounded-md p-4 absolute inset-0 justify-center items-center">
-      <div className="bg-themeBackground border border-themeText-10 rounded-md p-4 w-[80%] max-h-[80%] flex flex-col gap-5">
+    <div className=" flex bg-themeText-5  rounded-md p-4 absolute inset-0 justify-center items-center">
+      <div className="bg-white border border-themeText-10 rounded-md p-4 w-[80%] max-h-[80%] flex flex-col gap-5">
         <h1 className="text-[20px] font-bold text-themeText">Notification Interval</h1>
         <div>
           <select
@@ -95,8 +95,8 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
           </div>
         </div>
         {/* custom affirmation div */}
-        <div className="flex gap-5 justify-between">
-          <input className="outline-none border bg-white rounded-md" />
+        <div className="flex gap-5 justify-between items-center">
+          <textarea className="outline-none border bg-white rounded-md w-full max-h-[100px] min-h-[100px] p-2" />
           <Button>Add</Button>
         </div>
       </div>

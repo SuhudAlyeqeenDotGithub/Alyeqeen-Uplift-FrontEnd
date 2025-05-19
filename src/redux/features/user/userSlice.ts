@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
-import { signUp, login } from "./userThunk";
+import { signUp, login, getUserProfile } from "./userThunk";
 
 interface UserState {
   user: {
@@ -16,15 +14,15 @@ interface UserState {
   errorMessage: string;
 }
 
+// const localUser = JSON.parse(localStorage.getItem("user") as string);
+
 const initialState: UserState = {
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user") as string)
-    : {
-        userId: "",
-        userName: "",
-        userEmail: "",
-        authenticationType: ""
-      },
+  user: {
+    userId: "",
+    userName: "",
+    userEmail: "",
+    authenticationType: ""
+  },
   isSuccess: false,
   isLoading: false,
   isError: false,
@@ -70,6 +68,22 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.errorMessage = action.payload as string;
+      })
+      .addCase(getUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = "";
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.errorMessage = action.payload as string;

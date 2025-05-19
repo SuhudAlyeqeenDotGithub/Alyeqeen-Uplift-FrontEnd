@@ -44,7 +44,9 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleSignIn = () => {};
+  const handleGoogleSignIn = async () => {
+    window.location.href = "http://localhost:5000/auth/google";
+  };
 
   return (
     <div className="bg-lightGreen1 min-h-screen flex justify-center items-center">
