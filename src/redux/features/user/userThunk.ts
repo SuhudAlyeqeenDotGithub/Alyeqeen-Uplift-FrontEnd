@@ -9,34 +9,24 @@ interface User {
   authenticationType: string;
 }
 
-const signUp = createAsyncThunk<User, signUpData>(
-  "user/register",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await signUpUser(userData);
-      return response;
-    } catch (error) {
-      const typedError = error as any;
-      return rejectWithValue(
-        typedError.response?.data.message || typedError.message
-      );
-    }
+const signUp = createAsyncThunk<User, signUpData>("user/signup", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await signUpUser(userData);
+    return response;
+  } catch (error) {
+    const typedError = error as any;
+    return rejectWithValue(typedError.response?.data.message || typedError.message);
   }
-);
+});
 
-const login = createAsyncThunk<User, loginData>(
-  "user/register",
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await loginUser(userData);
-      return response;
-    } catch (error) {
-      const typedError = error as any;
-      return rejectWithValue(
-        typedError.response?.data.message || typedError.message
-      );
-    }
+const login = createAsyncThunk<User, loginData>("user/login", async (userData, { rejectWithValue }) => {
+  try {
+    const response = await loginUser(userData);
+    return response;
+  } catch (error) {
+    const typedError = error as any;
+    return rejectWithValue(typedError.response?.data.message || typedError.message);
   }
-);
+});
 
 export { signUp, login };

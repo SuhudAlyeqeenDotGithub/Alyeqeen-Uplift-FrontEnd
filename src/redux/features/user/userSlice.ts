@@ -17,16 +17,18 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  user: {
-    userId: "",
-    userName: "",
-    userEmail: "",
-    authenticationType: "",
-  },
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user") as string)
+    : {
+        userId: "",
+        userName: "",
+        userEmail: "",
+        authenticationType: ""
+      },
   isSuccess: false,
   isLoading: false,
   isError: false,
-  errorMessage: "",
+  errorMessage: ""
 };
 
 export const userSlice = createSlice({
@@ -35,7 +37,7 @@ export const userSlice = createSlice({
   reducers: {
     resetUser: (state) => {
       Object.assign(state, initialState);
-    },
+    }
   },
 
   extraReducers: (builder) => {
@@ -72,7 +74,7 @@ export const userSlice = createSlice({
         state.isError = true;
         state.errorMessage = action.payload as string;
       });
-  },
+  }
 });
 
 export const { resetUser } = userSlice.actions;

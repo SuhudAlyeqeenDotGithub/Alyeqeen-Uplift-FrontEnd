@@ -11,15 +11,19 @@ import { FaSearch } from "react-icons/fa";
 import values from "@/utilities/valuesList";
 import { properCase } from "@/utilities/shortFuntions";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store"; // Adjust the path if your store file is elsewhere
 
 const Home = () => {
   const router = useRouter();
-  const { accessToken, userName } = JSON.parse(localStorage.getItem("user") || "{}") || {};
-  if (!accessToken) {
-    router.push("/login");
-  }
+  const user = useSelector((state: RootState) => state.user);
+  const { userName, userEmail } = user.user;
+console.log(user);
+
   const name1 = userName?.split(" ")[0];
   const initial = name1?.split("")[0] + name1?.split("")[1].toUpperCase();
+
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/login");
