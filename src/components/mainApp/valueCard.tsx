@@ -106,7 +106,7 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
           {/* buttons div */}
           <div className="flex flex-col gap-3">
             <Button onClick={() => setOpenNotificationDialog(true)}>Set Notification</Button>
-            <Button>Set Language/Tone</Button>
+            {/* <Button>Set Language/Tone</Button> */}
           </div>
           {/* switches */}
           <div className="flex flex-col gap-5">
