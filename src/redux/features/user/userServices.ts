@@ -17,9 +17,6 @@ interface loginData {
 const loginUser = async (userData: loginData) => {
   try {
     const response = await axios.post(loginURI, userData, { withCredentials: true });
-    if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-    }
     return response.data;
   } catch (error) {
     const typedError = error as any;
@@ -29,10 +26,6 @@ const loginUser = async (userData: loginData) => {
 const signUpUser = async (userData: signUpData) => {
   try {
     const response = await axios.post(signUpURI, userData, { withCredentials: true });
-
-    if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
-    }
     return response.data;
   } catch (error) {
     const typedError = error as any;

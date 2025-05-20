@@ -23,8 +23,9 @@ const Home = () => {
   const [recommendedValues, setRecommendedValues] = useState(values);
   const [userValues, setUserValues] = useState<string[]>([]);
   const [customValue, setCustomValue] = useState<string>("");
-  const userState = useSelector((state: RootState) => state.user);
-  const { userName, userEmail } = userState.user;
+  const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
+  const { userName, userEmail } = userState;
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!userName || !userEmail) {
@@ -32,12 +33,11 @@ const Home = () => {
       }
     };
     fetchUserProfile();
-  }, [userName, userEmail, dispatch]);
+  }, []);
+
 
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
-
-  if (!userState) return null;
 
   const heroAffirmations = [
     "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
@@ -156,9 +156,8 @@ const Home = () => {
     }
   };
 
-  return (
-    <div className="">
-      {/* nav div */}
+  const body = (
+    <div>
       <div className="bg-themeText-5 border-b border-themeText-10 items-center flex justify-between p-2 px-10">
         <div className="flex justify-center items-center ml-20">
           <div className="flex w-[500px] items-center bg-themeText-5 p-2 rounded-md border border-themeText-20">
@@ -177,12 +176,12 @@ const Home = () => {
 
           <div className="bg-[url(/water.jpg)] bg-cover bg-center rounded-full w-12 h-12 p-2">
             <div className="bg-black/40 rounded-full w-full h-full flex justify-center items-center text-[15px] font-extrabold text-white">
-              {" "}
               {initial}
             </div>
           </div>
         </div>
       </div>
+
       {/* main body div */}
       <div className="px-10 pt-5 pb-10 w-full flex flex-col gap-8">
         <div className="flex justify-between items-center gap-x-10">
@@ -247,6 +246,13 @@ const Home = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div className="">
+      {/* nav div */}
+      {!isLoading && body}
     </div>
   );
 };

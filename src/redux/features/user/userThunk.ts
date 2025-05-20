@@ -32,14 +32,16 @@ const login = createAsyncThunk<User, loginData>("user/login", async (userData, {
 
 const getUserProfile = createAsyncThunk("user/getUserProfile", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get("http://localhost:5000/user/getUserProfile", {
+    const response = await axios.get("http://localhost:5000/api/users/getUserProfile", {
       withCredentials: true
     });
     if (response.data) {
-      localStorage.setItem("user", JSON.stringify(response.data));
     }
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    const typedError = error as any;
+    return rejectWithValue(typedError.response?.data.message || typedError.message);
+  }
 });
 
 export { signUp, login, getUserProfile };
