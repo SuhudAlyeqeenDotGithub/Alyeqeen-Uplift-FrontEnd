@@ -29,22 +29,25 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
   const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
 
   const notitificationDialog = (
-    <div className=" flex bg-themeText-5  rounded-md p-4 absolute inset-0 justify-center items-center">
-      <div className="bg-white border border-themeText-10 rounded-md p-4 w-[80%] max-h-[80%] flex flex-col gap-5">
+    <div className=" flex bg-themeText-5 rounded-md absolute inset-0 justify-center items-center z-20">
+      <div className="bg-white border border-themeText-10 rounded-md  p-4 w-[80%] max-h-[80%] flex flex-col gap-5">
         <h1 className="text-[20px] font-bold text-themeText">Notification Interval</h1>
-        <div>
-          <select
-            name="notificationInterval"
-            value={notificationInterval}
-            onChange={(e) => setNotificationInterval(e.target.value)}
-            className="border-themeText-20 border rounded-md p-2 w-full"
-          >
-            <option value="Monthly">Monthly</option>
-            <option value="Weekly">Weekly</option>
-            <option value="Daily">Daily</option>
-            <option value="Hourly">Hourly</option>
-          </select>
-        </div>
+
+        <select
+          name="notificationInterval"
+          value={notificationInterval}
+          onChange={(e) => setNotificationInterval(e.target.value)}
+          className="border-themeText-20 border rounded-md p-2 w-full"
+        >
+          <option value="" disabled>
+            Select Interval
+          </option>
+          <option value="Monthly">Monthly</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Daily">Daily</option>
+          <option value="Hourly">Hourly</option>
+        </select>
+
         <div>
           {/* if monthly, date, if weekly day, if daily time, if hourly interval */}
           <h1 className="font-semibold text-themeText-60">
@@ -66,7 +69,7 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
             className="bg-white w-full p-2 rounded-md border border-themeText-20"
           />
         </div>
-        <div>
+        <div className="flex justify-center">
           <Button onClick={() => setOpenNotificationDialog(false)}>Save</Button>
         </div>
       </div>
@@ -74,10 +77,14 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
   );
 
   return (
-    <div className="relative flex flex-col gap-10 w-[400px] h-[450px] bg-themeText-5 border border-themeText-10 rounded-xl shadow-md p-6 text-[15px] items-center justify-center">
+    <div className="relative flex flex-col gap-10 w-[400px] font-semibold h-[500px] bg-themeText-5 border border-themeText-10 rounded-xl shadow-md p-8 text-[15px] items-center justify-center">
       {openNotificationDialog && notitificationDialog}
-      <div className="flex flex-col gap-5">
-        <h1 className="text-[20px] font-extrabold">{value}</h1>
+      <div className="flex flex-col gap-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-[20px] font-extrabold">{value}</h1>
+          <p className="flex gap-3 font-bold text-themeText-50">{affirmations.length} Affirmation(s)</p>
+        </div>
+
         <div>
           <Carousel styling="font-bold" texts={affirmations} duration={4000} />
         </div>
@@ -96,7 +103,7 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
         </div>
         {/* custom affirmation div */}
         <div className="flex gap-5 justify-between items-center">
-          <textarea className="outline-none border bg-white rounded-md w-full max-h-[100px] min-h-[100px] p-2" />
+          <textarea className="outline-none focus:border border-themeText-20 bg-themeText-10  rounded-md w-full max-h-[100px] min-h-[100px] p-2" />
           <Button>Add</Button>
         </div>
       </div>

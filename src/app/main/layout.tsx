@@ -23,7 +23,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
     <div className="flex flex-row bg-themeBackground text-themeText">
       <div className={`p-3 border-r-1 border-themeText-10 font-semibold ${fullNav ? "" : ""}`}>
         <IoMdMenu
-          className="hover:cursor-pointer text-[30px] mb-10 hover:opacity-50"
+          className="hover:cursor-pointer text-[30px] mb-10 animate-pulse"
           onClick={() => {
             setFullNav(!fullNav);
           }}

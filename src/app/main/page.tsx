@@ -35,7 +35,6 @@ const Home = () => {
     fetchUserProfile();
   }, []);
 
-
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
 
@@ -160,8 +159,11 @@ const Home = () => {
     <div>
       <div className="bg-themeText-5 border-b border-themeText-10 items-center flex justify-between p-2 px-10">
         <div className="flex justify-center items-center ml-20">
-          <div className="flex w-[500px] items-center bg-themeText-5 p-2 rounded-md border border-themeText-20">
-            <input className="w-full outline-none border-none" placeholder="Quickly Find Affirmations - By Value" />
+          <div className="flex w-[500px] items-center border border-themeText-30 p-2 rounded-md bg-themeText-5">
+            <input
+              className="w-full outline-none border-none placeholder-themeText-60"
+              placeholder="Quickly Find Affirmations - By Value"
+            />
             <FaSearch className="text-themeText size-5" />
           </div>
         </div>
@@ -186,7 +188,7 @@ const Home = () => {
       <div className="px-10 pt-5 pb-10 w-full flex flex-col gap-8">
         <div className="flex justify-between items-center gap-x-10">
           <div className="w-[80%] flex flex-col gap-5 ">
-            <h1 className="text-[40px] font-bold text-themeText-80">Hi {name1}, It&rsquo;s time to uplift</h1>
+            <h1 className="text-[40px] font-bold text-themeText-50">Hi {name1}, It&rsquo;s time to uplift</h1>
             <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
           </div>
           <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[600px] h-[400px] bg-themeText-5 border border-themeText-10">
