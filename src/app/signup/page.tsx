@@ -25,10 +25,8 @@ const SignupPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/signup", formData);
+      const response = await axios.post("http://localhost:5000/api/users/signup", formData, { withCredentials: true });
       if (response.status === 201) {
-        const user = response.data;
-        localStorage.setItem("user", JSON.stringify(user));
         router.push("/main");
       }
     } catch (error) {

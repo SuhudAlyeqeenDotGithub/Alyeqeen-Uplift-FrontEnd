@@ -3,11 +3,19 @@ import type { loginData, signUpData } from "./userServices";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+interface ThemeType {
+  backgroundColor: string;
+  textColor: string;
+  buttonColor: string;
+  buttonTextColor: string;
+}
+
 interface User {
   userId: string;
   userName: string;
   userEmail: string;
   authenticationType: string;
+  themes: ThemeType;
 }
 
 const signUp = createAsyncThunk<User, signUpData>("user/signup", async (userData, { rejectWithValue }) => {

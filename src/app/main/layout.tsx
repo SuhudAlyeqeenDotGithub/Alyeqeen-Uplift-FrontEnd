@@ -7,17 +7,31 @@ import { MdOutlineColorLens, MdHelpOutline } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface MainProps {
   children: React.ReactNode;
 }
 
 const Main: React.FC<MainProps> = ({ children }) => {
+  const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
+  const { themes } = userState;
   const [fullNav, setFullNav] = useState(false);
   const linkStyle = "flex gap-x-3 items-center  hover:opacity-50";
   const iconStyle = "text-[30px]";
   const linkTextStyle = `${fullNav ? "block" : "hidden"}`;
+
+  useEffect(() => {
+    if (!themes) return;
+    const { backgroundColor, textColor, buttonColor, buttonTextColor } = themes;
+    const root = document.documentElement;
+    root.style.setProperty("--OthemeBackground", backgroundColor);
+    root.style.setProperty("--OthemeText", textColor);
+    root.style.setProperty("--OthemeButtonText", buttonColor);
+    root.style.setProperty("--OthemeButton", buttonTextColor);
+  }, []);
 
   return (
     <div className="flex flex-row bg-themeBackground text-themeText">

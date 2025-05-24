@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signUp, login, getUserProfile } from "./userThunk";
 
+interface ThemeType {
+  backgroundColor: string;
+  textColor: string;
+  buttonColor: string;
+  buttonTextColor: string;
+}
+
 interface UserState {
   user: {
     userId: string;
     userName: string;
     userEmail: string;
     authenticationType: string;
+    themes: ThemeType;
   };
   isSuccess: boolean;
   isLoading: boolean;
@@ -14,14 +22,18 @@ interface UserState {
   errorMessage: string;
 }
 
-// const localUser = JSON.parse(localStorage.getItem("user") as string);
-
 const initialState: UserState = {
   user: {
     userId: "",
     userName: "",
     userEmail: "",
-    authenticationType: ""
+    authenticationType: "",
+    themes: {
+      backgroundColor: "",
+      textColor: "",
+      buttonColor: "",
+      buttonTextColor: ""
+    }
   },
   isSuccess: false,
   isLoading: false,
@@ -35,6 +47,9 @@ export const userSlice = createSlice({
   reducers: {
     resetUser: (state) => {
       Object.assign(state, initialState);
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     }
   },
 
@@ -91,5 +106,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser, setUser } = userSlice.actions;
 export default userSlice.reducer;

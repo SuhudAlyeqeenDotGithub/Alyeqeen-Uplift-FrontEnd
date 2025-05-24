@@ -16,6 +16,7 @@ import type { RootState } from "@/redux/store"; // Adjust the path if your store
 import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserProfile } from "@/redux/features/user/userThunk";
+import { resetUser } from "@/redux/features/user/userSlice";
 
 const Home = () => {
   const router = useRouter();
@@ -149,6 +150,7 @@ const Home = () => {
       withCredentials: true
     });
     if (response?.data?.message === "Logged out successfully") {
+      dispatch(resetUser());
       router.push("/");
     } else {
       return;

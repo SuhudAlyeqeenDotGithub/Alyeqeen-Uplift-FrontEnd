@@ -4,12 +4,17 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FaSearch } from "react-icons/fa";
+import axios from "axios";
+import { setUser } from "@/redux/features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const ThemePage = () => {
+  const dispatch = useDispatch();
   const recommendedColors = ["#FFD54F", "#000000", "#FFFFFF", "#3BBF41", "#157EAB", "#187A81", "#FF7043", "#E7FAE8"];
   const [customColor, setCustomColor] = useState("");
   const [isValidColor, setIsValidColor] = useState(false);
   const [componentToChange, setComponentToChange] = useState("Background");
+  const [error, setError] = useState("");
 
   const [themeObject, setThemeObject] = useState({
     Background: getComputedStyle(document.documentElement).getPropertyValue("--OthemeBackground"),
@@ -24,12 +29,33 @@ const ThemePage = () => {
     setIsValidColor(hexRegex.test(customColor));
   }, [customColor]);
 
-  const applyTheme = () => {
+  const applyTheme = async () => {
     const root = document.documentElement;
     root.style.setProperty("--OthemeBackground", Background);
     root.style.setProperty("--OthemeText", Text);
     root.style.setProperty("--OthemeButtonText", ButtonText);
     root.style.setProperty("--OthemeButton", ButtonBack);
+
+    const themeToSend = {
+      backgroundColor: Background,
+      textColor: Text,
+      buttonColor: ButtonText,
+      buttonTextColor: ButtonBack
+    };
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/users/setUserTheme", themeToSend, {
+        withCredentials: true
+      });
+      if (response.data) {
+        dispatch(setUser(response.data));
+      }
+    } catch (err) {
+      const error: any = err;
+      setError(
+        error.data?.message || error.message || "Error saving you theme. You may need to reset it in your next visit"
+      );
+    }
   };
   return (
     <div className="flex flex-col min-h-screen p-10 gap-10">
@@ -126,35 +152,37 @@ const ThemePage = () => {
           </div>
         </div>
       </div>
+      <div className="flex flex-col mx-20 gap-2">
+        <div className="flex items-center gap-20">
+          {/* custom color div */}
+          <div className="flex">
+            <div className="flex gap-5">
+              <div>
+                <input
+                  className=" w-[300px] mb-1 outline-none bg-white p-2 rounded-md border border-greenStroke1"
+                  name={customColor}
+                  value={customColor}
+                  placeholder="Custom Color Format: #736D6D"
+                  onChange={(e) => setCustomColor(e.target.value)}
+                />
+                <div className="text-[13px] text-gray-600">{!isValidColor && "Invalid Color"}</div>
+              </div>
 
-      <div className="flex items-center gap-20">
-        {/* custom color div */}
-        <div className="flex mx-20">
-          <div className="flex gap-5">
-            <div>
-              <input
-                className=" w-[300px] mb-1 outline-none bg-white p-2 rounded-md border border-greenStroke1"
-                name={customColor}
-                value={customColor}
-                placeholder="Custom Color Format: #736D6D"
-                onChange={(e) => setCustomColor(e.target.value)}
-              />
-              <div className="text-[13px] text-gray-600">{!isValidColor && "Invalid Color"}</div>
+              <div className="w-8 h-8 rounded-full border shadow-lg" style={{ backgroundColor: customColor }}></div>
+              <Button
+                onClick={() => {
+                  setThemeObject({ ...themeObject, [componentToChange]: customColor });
+                }}
+              >
+                Add
+              </Button>
             </div>
-
-            <div className="w-8 h-8 rounded-full border shadow-lg" style={{ backgroundColor: customColor }}></div>
-            <Button
-              onClick={() => {
-                setThemeObject({ ...themeObject, [componentToChange]: customColor });
-              }}
-            >
-              Add
-            </Button>
+          </div>
+          <div className="flex justify-center w-full">
+            <Button onClick={applyTheme}>Apply Theme</Button>
           </div>
         </div>
-        <div className="flex justify-center w-full">
-          <Button onClick={applyTheme}>Apply Theme</Button>
-        </div>
+        {error && <div className="text-themeText-80 font-semibold">{error}</div>}
       </div>
       {/* theme list div */}
       <div className="flex flex-wrap gap-5 justify-center items-center">
