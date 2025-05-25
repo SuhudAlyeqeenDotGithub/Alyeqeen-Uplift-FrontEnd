@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FaSearch } from "react-icons/fa";
-import axios from "axios";
 import { setUser } from "@/redux/features/user/userSlice";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { handleApiRequest } from "@/axios/axiosClient";
 
 const ThemePage = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const recommendedColors = ["#FFD54F", "#000000", "#FFFFFF", "#3BBF41", "#157EAB", "#187A81", "#FF7043", "#E7FAE8"];
   const [customColor, setCustomColor] = useState("");
   const [isValidColor, setIsValidColor] = useState(false);
@@ -44,16 +46,15 @@ const ThemePage = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/setUserTheme", themeToSend, {
-        withCredentials: true
-      });
-      if (response.data) {
-        dispatch(setUser(response.data));
+      const response = await handleApiRequest("post", "http://localhost:5000/api/users/setUserTheme", themeToSend);
+      if (response) {
+        dispatch(setUser(response));
       }
-    } catch (err) {
-      const error: any = err;
+    } catch (err: any) {
       setError(
-        error.data?.message || error.message || "Error saving you theme. You may need to reset it in your next visit"
+        err.response?.data?.message ||
+          err.message ||
+          "Error saving your theme. You may need to reset it in your next visit."
       );
     }
   };

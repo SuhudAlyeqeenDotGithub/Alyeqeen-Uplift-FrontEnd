@@ -27,7 +27,7 @@ const Home = () => {
   const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
   const { userName, userEmail } = userState;
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchUserProfile = async () => {
       if (!userName || !userEmail) {
         await dispatch(getUserProfile());
@@ -35,6 +35,7 @@ const Home = () => {
     };
     fetchUserProfile();
   }, []);
+
 
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
