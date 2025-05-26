@@ -17,12 +17,21 @@ const valueAffirmations = [
   "I trust the process and allow things to unfold in their own time, with calm and understanding."
 ];
 
-interface ValueCardProps {
-  value: string;
-  affirmations: string[];
+interface affirmationType {
+  _id: string;
+  userId: string;
+  valueId: string;
+  valueName: string;
+  affirmation: string;
 }
 
-const ValueCard = ({ value, affirmations }: ValueCardProps) => {
+interface ValueCardProps {
+  valueName: string;
+  affirmations: affirmationType[];
+}
+
+const ValueCard = ({ valueName, affirmations }: ValueCardProps) => {
+  const affirmationsList = affirmations.map((item) => item.affirmation) || valueAffirmations;
   const switchTextComboStyle = "flex gap-3 justify-between";
   const [notificationInterval, setNotificationInterval] = useState("");
   const [intervalData, setIntervalData] = useState("");
@@ -81,12 +90,12 @@ const ValueCard = ({ value, affirmations }: ValueCardProps) => {
       {openNotificationDialog && notitificationDialog}
       <div className="flex flex-col gap-8">
         <div className="flex justify-between items-center">
-          <h1 className="text-[20px] font-extrabold">{value}</h1>
-          <p className="flex gap-3 font-bold text-themeText-50">{affirmations.length} Affirmation(s)</p>
+          <h1 className="text-[20px] font-extrabold">{valueName}</h1>
+          <p className="flex gap-3 font-bold text-themeText-50">{affirmationsList.length} Affirmation(s)</p>
         </div>
 
         <div>
-          <Carousel styling="font-bold" texts={affirmations} duration={4000} />
+          <Carousel styling="font-bold" texts={affirmationsList} duration={4000} />
         </div>
       </div>
       <div className="flex flex-col gap-5">

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import { getUserProfile } from "@/redux/features/user/userThunk";
+import { fetchValues_Affirmations } from "@/redux/features/values_affirmations/values_AffThunk";
 
 interface MainProps {
   children: React.ReactNode;
@@ -20,6 +21,9 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({ children }) => {
   const dispatch = useAppDispatch();
   const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
+  const { values_Affirmations, isLoading: valuesIsLoading } = useSelector(
+    (state: RootState) => state.values_Affirmations
+  );
   const { themes } = userState;
   const [fullNav, setFullNav] = useState(false);
   const linkStyle = "flex gap-x-3 items-center  hover:opacity-50";
@@ -35,6 +39,18 @@ const Main: React.FC<MainProps> = ({ children }) => {
       }
     };
     fetchUserProfile();
+  }, []);
+
+  useEffect(() => {
+    const handleFetchValuesAffirmations = async () => {
+      try {
+        await dispatch(fetchValues_Affirmations());
+      } catch (err: any) {
+        throw err;
+      }
+    };
+
+    handleFetchValuesAffirmations();
   }, []);
 
   useEffect(() => {

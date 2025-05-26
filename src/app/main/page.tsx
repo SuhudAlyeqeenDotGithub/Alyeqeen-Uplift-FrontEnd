@@ -17,17 +17,26 @@ import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserProfile } from "@/redux/features/user/userThunk";
 import { resetUser } from "@/redux/features/user/userSlice";
+import { createValues_Affirmations } from "@/redux/features/values_affirmations/values_AffThunk";
 
 const Home = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [recommendedValues, setRecommendedValues] = useState(values);
-  const [userValues, setUserValues] = useState<string[]>([]);
+  interface UserValue {
+    userId: string;
+    valueName: string;
+  }
+  const [userValues, setUserValues] = useState<UserValue[]>([]);
   const [customValue, setCustomValue] = useState<string>("");
   const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
-  const { userName, userEmail } = userState;
+  const { values_Affirmations, isLoading: valuesIsLoading } = useSelector(
+    (state: RootState) => state.values_Affirmations
+  );
+  const { userId, userName, userEmail } = userState;
+  const [valuesError, setValuesError] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchUserProfile = async () => {
       if (!userName || !userEmail) {
         await dispatch(getUserProfile());
@@ -35,7 +44,6 @@ const Home = () => {
     };
     fetchUserProfile();
   }, []);
-
 
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
@@ -52,89 +60,16 @@ const Home = () => {
     "I trust the process and allow things to unfold in their own time, with calm and understanding."
   ];
 
-  const affirmations = [
-    {
-      value: "Kindness",
-      affirmations: [
-        "I choose to be kind, even when it's hard, because kindness creates peace.",
-        "I speak and act with love, offering kindness freely to others and myself.",
-        "Every day, I look for ways to brighten someone’s day with a kind word or gesture."
-      ]
-    },
-    {
-      value: "Compassion",
-      affirmations: [
-        "I show compassion by being gentle with others and understanding their pain.",
-        "I care deeply about people and offer support without judgement.",
-        "My heart is open to those who suffer, and I respond with warmth and care."
-      ]
-    },
-    {
-      value: "Empathy",
-      affirmations: [
-        "I listen to understand, not to respond, and I honour other people’s feelings.",
-        "I put myself in others’ shoes, allowing their experiences to shape my understanding.",
-        "Empathy guides my actions and helps me connect with others deeply."
-      ]
-    },
-    {
-      value: "Gratitude",
-      affirmations: [
-        "I am thankful for what I have, and I celebrate the small wins each day.",
-        "Gratitude fills my heart and helps me see beauty in every moment.",
-        "I focus on what is good in my life and express thanks freely and often."
-      ]
-    },
-    {
-      value: "Respect",
-      affirmations: [
-        "I treat everyone I meet with dignity and honour, including myself.",
-        "I value differences and listen with an open heart and mind.",
-        "Respect starts with how I speak, act, and show up in the world."
-      ]
-    },
-    {
-      value: "Integrity",
-      affirmations: [
-        "I do the right thing, even when it’s not the easy thing.",
-        "I stand by my values and live honestly and truthfully.",
-        "My actions reflect my inner truth, and I remain grounded in who I am."
-      ]
-    },
-    {
-      value: "Courage",
-      affirmations: [
-        "I face challenges with strength and take brave steps forward.",
-        "Fear does not stop me; I move forward with courage and confidence.",
-        "Each act of courage brings me closer to the life I want to live."
-      ]
-    },
-    {
-      value: "Perseverance",
-      affirmations: [
-        "I keep going, even when it gets tough, because I believe in my path.",
-        "Setbacks do not stop me—they shape me into someone stronger.",
-        "I am committed to my goals and I rise every time I fall."
-      ]
-    },
-    {
-      value: "Patience",
-      affirmations: [
-        "I allow things to unfold in their own time, trusting the process.",
-        "I remain calm and present, even in moments of waiting or delay.",
-        "With patience, I give space for growth, healing, and change to happen."
-      ]
-    }
-  ];
+  const [affirmations, setAffirmations] = useState([]);
 
   const addValue = (value: string) => {
-    setUserValues((prevValues) => [...prevValues, value]);
+    setUserValues((prevValues) => [...prevValues, { userId, valueName: value }]);
     setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
   };
 
   const addCustomValue = (value: string) => {
     const validValue = properCase(value);
-    setUserValues((prevValues) => [...prevValues, validValue]);
+    setUserValues((prevValues) => [...prevValues, { userId, valueName: validValue }]);
     setCustomValue("");
     setRecommendedValues(recommendedValues.filter((recVal) => recVal !== validValue));
   };
@@ -155,6 +90,18 @@ const Home = () => {
       router.push("/");
     } else {
       return;
+    }
+  };
+
+  const handleCreateValue = async () => {
+    if (userValues.length < 1) return;
+    setValuesError("");
+    try {
+      const response = await dispatch(createValues_Affirmations(userValues)).unwrap();
+      if (response) setAffirmations(response);
+      setUserValues([]);
+    } catch (err: any) {
+      setValuesError(err.response?.data?.message || err.message || "Error Generating Affirmations");
     }
   };
 
@@ -197,18 +144,25 @@ const Home = () => {
           <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[600px] h-[400px] bg-themeText-5 border border-themeText-10">
             <div className="flex justify-center items-center w-full">
               <h1 className="font-bold mb-2 w-full text-[18px]">Your Values</h1>
-              <div className="flex justify-end w-full">
+              <div className="flex justify-end w-full gap-3">
                 <Link href="/main/values" className="hover:bg-themeText-10 rounded-full p-1" title="Values">
                   <MdOutlineModeEdit className="size-6" />
                 </Link>
+                <Button
+                  className="font-semibold animate-bounce"
+                  disabled={userValues.length < 1}
+                  onClick={handleCreateValue}
+                >
+                  Generate Affirmations
+                </Button>
               </div>
             </div>
 
             <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
               {userValues.length > 0 ? (
-                userValues.map((value) => (
-                  <span key={value} className="">
-                    {value}
+                userValues.map(({ valueName }) => (
+                  <span key={valueName} className="rounded bg-themeText-20 p-1">
+                    {valueName}
                   </span>
                 ))
               ) : (
@@ -216,6 +170,7 @@ const Home = () => {
               )}
             </div>
             <div className="h-[60%] w-full flex flex-col gap-3 items-center ">
+              {valuesError && <p className="text-[14px]">{valuesError}</p>}
               <div className="flex gap-5 items-center">
                 <input
                   type="text"
@@ -224,7 +179,7 @@ const Home = () => {
                   name={customValue}
                   onChange={(e) => setCustomValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="bg-white rounded-md p-2 mt-2"
+                  className="bg-themeText-30 text-themeText rounded-md p-2 mt-2"
                 />
                 <Button className="w-[20%]" onClick={() => addCustomValue(customValue)}>
                   Add
@@ -243,11 +198,18 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-5">
           <div className="overflow-auto h-[700px]">
-            <div className="flex flex-wrap justify-center gap-4">
-              {affirmations.map(({ value, affirmations }) => (
-                <ValueCard key={value} value={value} affirmations={affirmations} />
-              ))}
-            </div>
+            {!valuesIsLoading ? (
+              <div className="flex flex-wrap justify-center gap-4">
+                {values_Affirmations.map(({ valueId, valueName, affirmations }) => (
+                  <ValueCard key={valueId} valueName={valueName} affirmations={affirmations} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex gap-5 animate-pulse items-center justify-center mt-20">
+                Loading Affirmations....
+                <div className="rounded-full w-10 h-10 border-b-4 border-l-4 border-themeText animate-spin"></div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -257,7 +219,7 @@ const Home = () => {
   return (
     <div className="">
       {/* nav div */}
-      {!isLoading && body}
+      {body}
     </div>
   );
 };
