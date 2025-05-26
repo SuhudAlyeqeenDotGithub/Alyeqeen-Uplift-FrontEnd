@@ -1,10 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createValues_Affirmations, fetchValues_Affirmations } from "./values_AffThunk";
 
+interface affirmationType {
+  _id: string;
+  userId: string;
+  valueId: string;
+  valueName: string;
+  affirmation: string;
+}
+
 interface Value_AffirmationType {
   valueId: string;
   valueName: string;
-  affirmations: [];
+  affirmations: affirmationType[];
   userId: string;
   generateWithAi: boolean;
   storeAiAffirmations: boolean;

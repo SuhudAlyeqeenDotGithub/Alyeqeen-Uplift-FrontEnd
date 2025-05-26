@@ -5,18 +5,6 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { useState } from "react";
 
-const valueAffirmations = [
-  "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
-  "I listen with my heart and strive to understand how others feel, even when their experience is different from mine.",
-  "I am thankful for what I have, and I find joy in the simple things around me each day.",
-  "I stay true to my values, even when no one is watching, and I do what is right, not what is easy.",
-  "I show care and concern for others, offering support without judgement.",
-  "I face my fears with strength and take brave steps, even when the path is uncertain.",
-  "I keep going, even when things get tough, because I believe in myself and in the journey ahead.",
-  "I treat others with honour and dignity, just as I wish to be treated.",
-  "I trust the process and allow things to unfold in their own time, with calm and understanding."
-];
-
 interface affirmationType {
   _id: string;
   userId: string;
@@ -31,7 +19,7 @@ interface ValueCardProps {
 }
 
 const ValueCard = ({ valueName, affirmations }: ValueCardProps) => {
-  const affirmationsList = affirmations.map((item) => item.affirmation) || valueAffirmations;
+  const affirmationsList = affirmations.map((item) => item.affirmation);
   const switchTextComboStyle = "flex gap-3 justify-between";
   const [notificationInterval, setNotificationInterval] = useState("");
   const [intervalData, setIntervalData] = useState("");
@@ -88,14 +76,18 @@ const ValueCard = ({ valueName, affirmations }: ValueCardProps) => {
   return (
     <div className="relative flex flex-col gap-10 w-[400px] font-semibold h-[500px] bg-themeText-5 border border-themeText-10 rounded-xl shadow-md p-8 text-[15px] items-center justify-center">
       {openNotificationDialog && notitificationDialog}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 w-full">
         <div className="flex justify-between items-center">
           <h1 className="text-[20px] font-extrabold">{valueName}</h1>
           <p className="flex gap-3 font-bold text-themeText-50">{affirmationsList.length} Affirmation(s)</p>
         </div>
 
         <div>
-          <Carousel styling="font-bold" texts={affirmationsList} duration={4000} />
+          {affirmationsList.length > 0 ? (
+            <Carousel styling="font-bold" texts={affirmationsList} duration={4000} />
+          ) : (
+            <p className="text-themeText-50">No affirmations available. Use the section below to start adding.</p>
+          )}
         </div>
       </div>
       <div className="flex flex-col gap-5">

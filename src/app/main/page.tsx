@@ -17,12 +17,13 @@ import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserProfile } from "@/redux/features/user/userThunk";
 import { resetUser } from "@/redux/features/user/userSlice";
+import { resetValues_Affirmations } from "@/redux/features/values_affirmations/values_AffSlice";
 import { createValues_Affirmations } from "@/redux/features/values_affirmations/values_AffThunk";
 
 const Home = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [recommendedValues, setRecommendedValues] = useState(values);
+
   interface UserValue {
     userId: string;
     valueName: string;
@@ -33,6 +34,8 @@ const Home = () => {
   const { values_Affirmations, isLoading: valuesIsLoading } = useSelector(
     (state: RootState) => state.values_Affirmations
   );
+
+  const [recommendedValues, setRecommendedValues] = useState<string[]>([]);
   const { userId, userName, userEmail } = userState;
   const [valuesError, setValuesError] = useState("");
 
@@ -45,22 +48,17 @@ const Home = () => {
     fetchUserProfile();
   }, []);
 
+  useEffect(() => {
+    const extractedValues = values_Affirmations.map(({ valueName }) => valueName);
+    const sanitizedRecommendedValues = values.filter((value) => !extractedValues.includes(value));
+    setRecommendedValues(sanitizedRecommendedValues);
+  }, []);
+
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
-
-  const heroAffirmations = [
-    "I choose to be kind to others and to myself, knowing that even small acts can make a big difference.",
-    "I listen with my heart and strive to understand how others feel, even when their experience is different from mine.",
-    "I am thankful for what I have, and I find joy in the simple things around me each day.",
-    "I stay true to my values, even when no one is watching, and I do what is right, not what is easy.",
-    "I show care and concern for others, offering support without judgement.",
-    "I face my fears with strength and take brave steps, even when the path is uncertain.",
-    "I keep going, even when things get tough, because I believe in myself and in the journey ahead.",
-    "I treat others with honour and dignity, just as I wish to be treated.",
-    "I trust the process and allow things to unfold in their own time, with calm and understanding."
-  ];
-
-  const [affirmations, setAffirmations] = useState([]);
+  const affirmationList = values_Affirmations
+    .map(({ affirmations }) => affirmations.map(({ affirmation }) => affirmation))
+    .flat();
 
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, { userId, valueName: value }]);
@@ -87,6 +85,7 @@ const Home = () => {
     });
     if (response?.data?.message === "Logged out successfully") {
       dispatch(resetUser());
+      dispatch(resetValues_Affirmations());
       router.push("/");
     } else {
       return;
@@ -98,7 +97,7 @@ const Home = () => {
     setValuesError("");
     try {
       const response = await dispatch(createValues_Affirmations(userValues)).unwrap();
-      if (response) setAffirmations(response);
+
       setUserValues([]);
     } catch (err: any) {
       setValuesError(err.response?.data?.message || err.message || "Error Generating Affirmations");
@@ -139,7 +138,11 @@ const Home = () => {
         <div className="flex justify-between items-center gap-x-10">
           <div className="w-[80%] flex flex-col gap-5 ">
             <h1 className="text-[40px] font-bold text-themeText-50">Hi {name1}, It&rsquo;s time to uplift</h1>
-            <Carousel styling="text-[40px] font-bold" texts={heroAffirmations} duration={3000} />
+            {affirmationList.length > 0 ? (
+              <Carousel styling="text-[40px] font-bold" texts={affirmationList} duration={3000} />
+            ) : (
+              <p className="text-[40px]">You have no affirmations for any values yet.</p>
+            )}
           </div>
           <div className="flex flex-col gap-5 justify-center items-center rounded-md p-4 w-[600px] h-[400px] bg-themeText-5 border border-themeText-10">
             <div className="flex justify-center items-center w-full">
