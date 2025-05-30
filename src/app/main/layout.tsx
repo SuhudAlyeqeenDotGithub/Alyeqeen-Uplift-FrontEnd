@@ -64,7 +64,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
   }, [isLoading, themes]);
 
   return (
-    <div>
+    <div className="">
       {!isLoading && (
         <div className="flex flex-row bg-themeBackground text-themeText">
           <div className={`p-3 border-r-1 border-themeText-10 font-semibold ${fullNav ? "" : ""}`}>
@@ -74,7 +74,7 @@ const Main: React.FC<MainProps> = ({ children }) => {
                 setFullNav(!fullNav);
               }}
             />
-            <nav className="flex flex-col gap-5 ">
+            <nav className="flex flex-col gap-5">
               <Link href="/main" className={linkStyle} title="Home">
                 <IoHomeOutline className={iconStyle} />
                 <div className={linkTextStyle}>Home</div>

@@ -75,7 +75,7 @@ const ThemePage = () => {
         {/* component selection div */}
         <div className="flex gap-5 font-semibold text-themeText-90">
           <button
-            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+            className={`hover:cursor-pointer rounded-full p-2 hover:bg-themeText-20 ${
               componentToChange === "Background" ? "text-themeText-90 bg-themeText-10" : ""
             }`}
             onClick={() => setComponentToChange("Background")}
@@ -83,7 +83,7 @@ const ThemePage = () => {
             Background
           </button>
           <button
-            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+            className={`hover:cursor-pointer rounded-full p-2 hover:bg-themeText-20 ${
               componentToChange === "Text" ? "text-themeText-90 bg-themeText-10" : ""
             }`}
             onClick={() => setComponentToChange("Text")}
@@ -91,7 +91,7 @@ const ThemePage = () => {
             Text
           </button>
           <button
-            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+            className={`hover:cursor-pointer rounded-full p-2 hover:bg-themeText-20 ${
               componentToChange === "ButtonBack" ? "text-themeText-90 bg-themeText-10" : ""
             }`}
             onClick={() => setComponentToChange("ButtonBack")}
@@ -99,7 +99,7 @@ const ThemePage = () => {
             Button
           </button>
           <button
-            className={`hover:cursor-pointer rounded-full p-2 hover:text-black ${
+            className={`hover:cursor-pointer rounded-full p-2 hover:bg-themeText-20 ${
               componentToChange === "ButtonText" ? "text-themeText-90 bg-themeText-10" : ""
             }`}
             onClick={() => setComponentToChange("ButtonText")}

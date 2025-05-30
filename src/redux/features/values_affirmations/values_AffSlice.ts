@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createValues_Affirmations, fetchValues_Affirmations } from "./values_AffThunk";
+import { createValues_Affirmations, fetchValues_Affirmations, deleteValue_Affirmations } from "./values_AffThunk";
 
 interface affirmationType {
   _id: string;
@@ -10,17 +10,15 @@ interface affirmationType {
 }
 
 interface Value_AffirmationType {
-  valueId: string;
+  _id: string;
   valueName: string;
   affirmations: affirmationType[];
   userId: string;
   generateWithAi: boolean;
   storeAiAffirmations: boolean;
   activateNotification: boolean;
-  notificationSetting: {
-    intervalName: String;
-    intervalValue: String;
-  };
+  intervalName: String;
+  intervalValue: String;
   readAffirmation: boolean;
 }
 
@@ -45,6 +43,9 @@ export const values_AffirmationsSlice = createSlice({
   reducers: {
     resetValues_Affirmations: (state) => {
       Object.assign(state, initialState);
+    },
+    updateValues_Affirmations: (state, action) => {
+      state.values_Affirmations = action.payload;
     }
   },
 
@@ -81,9 +82,25 @@ export const values_AffirmationsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.errorMessage = action.payload as string;
+      })
+      .addCase(deleteValue_Affirmations.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = "";
+      })
+      .addCase(deleteValue_Affirmations.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.values_Affirmations = action.payload;
+      })
+      .addCase(deleteValue_Affirmations.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.errorMessage = action.payload as string;
       });
   }
 });
 
-export const { resetValues_Affirmations } = values_AffirmationsSlice.actions;
+export const { resetValues_Affirmations, updateValues_Affirmations } = values_AffirmationsSlice.actions;
 export default values_AffirmationsSlice.reducer;

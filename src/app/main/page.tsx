@@ -2,6 +2,7 @@
 
 import { MdOutlineModeEdit } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { IoIosClose } from "react-icons/io";
 
 import Carousel from "@/components/carousel";
 import ValueCard from "@/components/mainApp/valueCard";
@@ -31,38 +32,34 @@ const Home = () => {
   const [userValues, setUserValues] = useState<UserValue[]>([]);
   const [customValue, setCustomValue] = useState<string>("");
   const { user: userState, isLoading } = useSelector((state: RootState) => state.user);
+  const { userId, userName, userEmail } = userState;
   const { values_Affirmations, isLoading: valuesIsLoading } = useSelector(
     (state: RootState) => state.values_Affirmations
   );
 
+  const affirmationList = values_Affirmations
+    .map(({ affirmations }) => affirmations.map(({ affirmation }) => affirmation))
+    .flat();
   const [recommendedValues, setRecommendedValues] = useState<string[]>([]);
-  const { userId, userName, userEmail } = userState;
   const [valuesError, setValuesError] = useState("");
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!userName || !userEmail) {
-        await dispatch(getUserProfile());
-      }
-    };
-    fetchUserProfile();
-  }, []);
 
   useEffect(() => {
     const extractedValues = values_Affirmations.map(({ valueName }) => valueName);
     const sanitizedRecommendedValues = values.filter((value) => !extractedValues.includes(value));
     setRecommendedValues(sanitizedRecommendedValues);
-  }, []);
+  }, [valuesIsLoading]);
 
   const name1 = userName?.split(" ")[0];
   const initial = name1?.[0]?.toUpperCase() + name1?.[1]?.toUpperCase();
-  const affirmationList = values_Affirmations
-    .map(({ affirmations }) => affirmations.map(({ affirmation }) => affirmation))
-    .flat();
 
   const addValue = (value: string) => {
     setUserValues((prevValues) => [...prevValues, { userId, valueName: value }]);
     setRecommendedValues(recommendedValues.filter((recVal) => recVal !== value));
+  };
+
+  const removeValue = (value: string) => {
+    setUserValues((prevValues) => prevValues.filter(({ valueName }) => valueName !== value));
+    setRecommendedValues((prevValues) => [...prevValues, value]);
   };
 
   const addCustomValue = (value: string) => {
@@ -105,7 +102,7 @@ const Home = () => {
   };
 
   const body = (
-    <div>
+    <div className="">
       <div className="bg-themeText-5 border-b border-themeText-10 items-center flex justify-between p-2 px-10">
         <div className="flex justify-center items-center ml-20">
           <div className="flex w-[500px] items-center border border-themeText-30 p-2 rounded-md bg-themeText-5">
@@ -134,7 +131,7 @@ const Home = () => {
       </div>
 
       {/* main body div */}
-      <div className="px-10 pt-5 pb-10 w-full flex flex-col gap-8">
+      <div className="px-10 pt-5 pb-10 flex flex-col gap-8 w-full">
         <div className="flex justify-between items-center gap-x-10">
           <div className="w-[80%] flex flex-col gap-5 ">
             <h1 className="text-[40px] font-bold text-themeText-50">Hi {name1}, It&rsquo;s time to uplift</h1>
@@ -148,9 +145,6 @@ const Home = () => {
             <div className="flex justify-center items-center w-full">
               <h1 className="font-bold mb-2 w-full text-[18px]">Your Values</h1>
               <div className="flex justify-end w-full gap-3">
-                <Link href="/main/values" className="hover:bg-themeText-10 rounded-full p-1" title="Values">
-                  <MdOutlineModeEdit className="size-6" />
-                </Link>
                 <Button
                   className="font-semibold animate-bounce"
                   disabled={userValues.length < 1}
@@ -164,9 +158,14 @@ const Home = () => {
             <div className="h-[30%] w-full flex flex-wrap place-content-start gap-2 overflow-auto text-[14px]">
               {userValues.length > 0 ? (
                 userValues.map(({ valueName }) => (
-                  <span key={valueName} className="rounded bg-themeText-20 p-1">
+                  <div
+                    key={valueName}
+                    className="rounded-md bg-themeText-20 px-2 py-1 flex gap-3 items-center justfiy-center hover:bg-themeText-40 hover:cursor-pointer"
+                    onClick={() => removeValue(valueName)}
+                  >
                     {valueName}
-                  </span>
+                    <IoIosClose className="size-6" />
+                  </div>
                 ))
               ) : (
                 <span className="">Please enter a custom or recommended value</span>
@@ -182,7 +181,7 @@ const Home = () => {
                   name={customValue}
                   onChange={(e) => setCustomValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  className="bg-themeText-30 text-themeText rounded-md p-2 mt-2"
+                  className="outline-none focus:border border-themeText-20 bg-themeText-10  rounded-md w-full p-2"
                 />
                 <Button className="w-[20%]" onClick={() => addCustomValue(customValue)}>
                   Add
@@ -203,8 +202,14 @@ const Home = () => {
           <div className="overflow-auto h-[700px]">
             {!valuesIsLoading ? (
               <div className="flex flex-wrap justify-center gap-4">
-                {values_Affirmations.map(({ valueId, valueName, affirmations }) => (
-                  <ValueCard key={valueId} valueName={valueName} affirmations={affirmations} />
+                {values_Affirmations.map(({ _id: valueId, valueName, affirmations }) => (
+                  <ValueCard
+                    key={valueId}
+                    userId={userId}
+                    valueId={valueId}
+                    valueName={valueName}
+                    affirmations={affirmations}
+                  />
                 ))}
               </div>
             ) : (
@@ -220,7 +225,7 @@ const Home = () => {
   );
 
   return (
-    <div className="">
+    <div className="w-full">
       {/* nav div */}
       {body}
     </div>

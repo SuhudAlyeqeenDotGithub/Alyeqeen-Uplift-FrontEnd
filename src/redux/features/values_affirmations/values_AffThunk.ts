@@ -37,3 +37,20 @@ export const fetchValues_Affirmations = createAsyncThunk(
     }
   }
 );
+
+export const deleteValue_Affirmations = createAsyncThunk(
+  "valuesAffirmations/deleteValueAffirmations",
+  async (valueId: { valueId: string }, { rejectWithValue }) => {
+    try {
+      const response = await handleApiRequest(
+        "delete",
+        "http://localhost:5000/api/valuesAffirmations/deleteValueAffirmations",
+        valueId
+      );
+
+      if (response) return response;
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || err.message || "Error Deleting Value and its Affirmations");
+    }
+  }
+);
